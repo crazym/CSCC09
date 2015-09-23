@@ -1,6 +1,18 @@
+html{
+    height: 100%;
+    margin: 0px;
+}
+
 body{
     font-family: 'Open Sans', sans-serif;
     padding-top:50px;
+    min-height: 100%;
+    margin: 0px;
+}
+
+main{
+    height: 100%;
+    margin: 0px;
 }
 
 header {

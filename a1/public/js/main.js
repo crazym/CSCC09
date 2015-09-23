@@ -32,11 +32,11 @@ splat.AppRouter = Backbone.Router.extend({
     },
 
     about: function() {
-	// If the Home view doesn't exist, instantiate one
+	// If the About view doesn't exist, instantiate one
         if (!this.aboutView) {
             this.aboutView = new splat.About();
         };
-	// insert the rendered Home view element into the document DOM
+    // insert the rendered About view element into the document DOM
         $('#content').html(this.aboutView.render().el);
     }
 

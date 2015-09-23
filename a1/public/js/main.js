@@ -9,7 +9,8 @@ splat.AppRouter = Backbone.Router.extend({
 
     // Map "URL paths" to "router functions"
     routes: {
-        "": "home"
+        "": "home",
+        "about": "about"
     },
 
     // When an instance of an AppRouter is declared, create a Header view
@@ -27,6 +28,15 @@ splat.AppRouter = Backbone.Router.extend({
         };
 	// insert the rendered Home view element into the document DOM
         $('#content').html(this.homeView.render().el);
+    },
+
+    about: function() {
+	// If the Home view doesn't exist, instantiate one
+        if (!this.aboutView) {
+            this.aboutView = new splat.About();
+        };
+	// insert the rendered Home view element into the document DOM
+        $('#content').html(this.aboutView.render().el);
     }
 
 });

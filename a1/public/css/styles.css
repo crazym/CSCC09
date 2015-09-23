@@ -11,7 +11,7 @@ header {
     /*margin: 0 auto; position: relative; }*/
 
 .home-hero {
-    background-color: #245580;
+    background-image: url("images/splat.jpg");
     color: white;
     font-family: "Verdana", Geneva, Helvetica, sans-serif;
     font-size: 36px;

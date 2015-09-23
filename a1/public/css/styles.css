@@ -11,9 +11,18 @@ header {
     /*margin: 0 auto; position: relative; }*/
 
 .home-hero {
-    background-color: #080808;
+    background-color: #245580;
     color: white;
     font-family: "Verdana", Geneva, Helvetica, sans-serif;
     font-size: 36px;
     text-align: center;
+    text-shadow: 1px 1px black;
+}
+
+.home-menu {
+    font-size: 125%;
+}
+
+.footer {
+    text-align: right;
 }

@@ -1,0 +1,19 @@
+body{
+    font-family: 'Open Sans', sans-serif;
+    padding-top:50px;
+}
+
+header {
+    padding: 5px 0;
+    width: 100%;
+}
+/*#headercontainer, #contentcontainer { width: 960px;*/
+    /*margin: 0 auto; position: relative; }*/
+
+.home-hero {
+    background-color: #080808;
+    color: white;
+    font-family: "Verdana", Geneva, Helvetica, sans-serif;
+    font-size: 36px;
+    text-align: center;
+}

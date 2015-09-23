@@ -10,6 +10,7 @@ splat.AppRouter = Backbone.Router.extend({
     // Map "URL paths" to "router functions"
     routes: {
         "": "home",
+        "home": "home",
         "about": "about"
     },
 

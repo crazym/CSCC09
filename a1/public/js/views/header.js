@@ -8,6 +8,7 @@ var splat =  splat || {};
 splat.Header = Backbone.View.extend({
 
     events: {
+        // trigger the selectMenuItem funtion with current event target on click of any menu item
         "click .menu-item": function(e) {
             this.selectMenuItem(e.currentTarget)}
     },
@@ -19,7 +20,9 @@ splat.Header = Backbone.View.extend({
         return this;    // support method chaining
     },
 
+    // set menu item to active on click
     selectMenuItem: function(menuItem) {
+        // remove the active class on any current menu item
         $('.menu-item').removeClass('active')
         $(menuItem).addClass('active')
     }

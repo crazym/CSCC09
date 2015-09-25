@@ -16,7 +16,9 @@ header {
 }
 
 .home-hero {
-    background-image: url("images/splat.jpg");
+    background-image: url("images/galaxy.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
     color: white;
     font-family: "Verdana", Geneva, Helvetica, sans-serif;
     font-size: 36px;

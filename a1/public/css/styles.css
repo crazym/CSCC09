@@ -1,16 +1,11 @@
-html{
-    height: 100%;
-    margin: 0px;
-}
-
-body{
+body {
     font-family: 'Open Sans', sans-serif;
-    padding-top:50px;
-    min-height: 100%;
+    padding-top:40px;
     margin: 0px;
+    background-color: black;
 }
 
-main{
+main {
     height: 100%;
     margin: 0px;
 }
@@ -19,8 +14,6 @@ header {
     padding: 5px 0;
     width: 100%;
 }
-/*#headercontainer, #contentcontainer { width: 960px;*/
-    /*margin: 0 auto; position: relative; }*/
 
 .home-hero {
     background-image: url("images/splat.jpg");
@@ -29,13 +22,21 @@ header {
     font-size: 36px;
     text-align: center;
     text-shadow: 1px 1px black;
+    padding: 20%;
+    height: 100%;   
 }
 
 .home-menu {
     font-size: 125%;
 }
 
+.about {
+    padding-top: -30px;
+    color: white;
+}
+
 .footer {
     text-align: right;
+    color: #C0C0C0;
 }
 

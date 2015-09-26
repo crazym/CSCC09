@@ -46,4 +46,7 @@ header {
     text-align: right;
     color: #C0C0C0;
 }
-
+ #aboutApp{
+     text-align: center;
+     padding: 3%;
+ }

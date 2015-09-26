@@ -5,14 +5,23 @@ body {
     background-color: black;
 }
 
+header {
+    padding: 5px 0;
+    width: 100%;
+}
+
 main {
     height: 100%;
     margin: 0px;
 }
 
-header {
-    padding: 5px 0;
-    width: 100%;
+footer {
+    text-align: right;
+    color: #C0C0C0;
+}
+
+.home-menu {
+    font-size: 125%;
 }
 
 .home-hero {
@@ -28,46 +37,21 @@ header {
     height: 100%;   
 }
 
-.home-menu {
-    font-size: 125%;
-}
-
 .about {
     padding-top: -30px;
     color: white;
-    font-size: 15px;
+    font-size: 110%;
 }
 
-#profile {
-    width: 10%;
-    float: right;
- }
-
-.footer {
-    text-align: right;
-    color: #C0C0C0;
-}
- #aboutApp{
-     text-align: center;
-     padding: 3%;
- }
-
-#maomao{
-    width: 33%;
-    float:right;
-    padding-top:7%;
-}
-
-#manman{
-    width: 33%;
-    float:left;
-    padding-top:7%;
-}
-
-#ererbi{
-    width: 33%;
-    display: inline-block;
+#aboutApp {
     text-align: center;
+    padding: 3%;
+}
+
+#app-pic {
+    max-width: 40%;
+    height: auto;
+    width: auto;
 }
 
 #aboutUs {
@@ -75,6 +59,29 @@ header {
     padding-right: 11%;
 }
 
-.about h2{
-    font-size: 25px;
+#ererbi {
+    width: 33%;
+    display: inline-block;
+    text-align: center;
+    position: relative;
 }
+
+#dev-pic {
+    max-width: 100%;
+    height: auto;
+    width: auto;
+}
+
+.dev-bio {
+    width: 33%;
+    padding-top:7%;
+}
+
+#maomao {
+    float:right;
+}
+
+#manman {
+    float:left;
+}
+

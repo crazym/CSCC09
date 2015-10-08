@@ -11,7 +11,11 @@ splat.AppRouter = Backbone.Router.extend({
     routes: {
         "": "home",
         "home": "home",
-        "about": "about"
+        "about": "about",
+        "movies": "browse",
+        "movies/add": "details",
+        "movies/:id": "details"
+
     },
 
     // When an instance of an AppRouter is declared, create a Header view
@@ -38,6 +42,10 @@ splat.AppRouter = Backbone.Router.extend({
         };
     // insert the rendered About view element into the document DOM
         $('#content').html(this.aboutView.render().el);
+    },
+
+    browse: function() {
+//hmm, how to do?
     }
 
 });

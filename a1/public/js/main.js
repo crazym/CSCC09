@@ -44,8 +44,17 @@ splat.AppRouter = Backbone.Router.extend({
         $('#content').html(this.aboutView.render().el);
     },
 
-    browse: function() {
-//hmm, how to do?
+    details: function() {
+        // instantiate a HelloWorld model, with a name-field value
+        if (!this.movieModel) {
+            this.movieModel = new splat.Movie();
+        }
+        if (!this.detailsView) {
+            this.detailsView = new splat.Details({model: this.movieModel});
+        }
+        // render the helloWorld View, and insert its root element "el"
+        // as the value of the view's #content element.
+        $('#content').html(this.detailsView.render().el);
     }
 
 });
@@ -53,7 +62,7 @@ splat.AppRouter = Backbone.Router.extend({
 // Load HTML templates for Home, Header, About views, and when
 // template loading is complete, instantiate a Backbone router
 // with history.
-splat.utils.loadTemplates(['Home', 'Header', 'About'], function() {
+splat.utils.loadTemplates(['Home', 'Header', 'About', 'Details'], function() {
     splat.app = new splat.AppRouter();
     Backbone.history.start();
 });

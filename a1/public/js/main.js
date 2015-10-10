@@ -94,7 +94,7 @@ splat.AppRouter = Backbone.Router.extend({
 // with history.
 splat.utils.loadTemplates(['Home', 'Header', 'About', 'Details'], function() {
     // load markup template for HelloWorld Thumbnail view
-    splat.loadThumbTemplate = $.get('tpl/HelloThumb.html');
+    splat.loadThumbTemplate = $.get('tpl/MovieThumb.html');
     splat.loadThumbTemplate.done(function(markup) {
         // keep an app-level reference to the template markup for views to ref
         splat.thumbMarkup = markup;

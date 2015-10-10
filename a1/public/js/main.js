@@ -30,7 +30,7 @@ splat.AppRouter = Backbone.Router.extend({
         this.moviesFetch = this.collection.fetch();
         var self = this;
         this.moviesFetch.done(function(movies,response) {
-            window.localStorage.clear();
+            //window.localStorage.clear();
             if (movies.length === 0) {
                 var movies= ["Alpha", "Beta", "Charlie", "Delta", "Epsilon"];
                 movies.map(function(movie) {
@@ -79,11 +79,12 @@ splat.AppRouter = Backbone.Router.extend({
         // Note, we can have multiple .done() calls for a single Promise.
         this.moviesFetch.done(function(movie,response) {
             // now instantiate a HelloWorld view using fetched collection
-            this.movieView = new splat.MovieView({collection: self.collection});
+            console.log(self.collection);
+            self.movieView = new splat.MovieView({collection: self.collection});
 
             // render the helloWorld View, and insert its root element "el"
             // as the value of the view's #content element.
-            $('#content').html(this.movieView.render().el);
+            $('#content').html(self.movieView.render().el);
         });
     }
 
@@ -98,7 +99,7 @@ splat.utils.loadTemplates(['Home', 'Header', 'About', 'Details'], function() {
     splat.loadThumbTemplate.done(function(markup) {
         // keep an app-level reference to the template markup for views to ref
         splat.thumbMarkup = markup;
-    })
+    });
     splat.app = new splat.AppRouter();
     Backbone.history.start();
 });

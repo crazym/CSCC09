@@ -25,9 +25,13 @@ splat.utils = {
          * @param {[String]} view:  root name (w/o .html) of view template file
          */
         $.each(views, function(index, view) {
+            console.log("splat is");
+            console.log(splat);
+            console.log("view is");
+            console.log(view);
 	    // If an associated Backbone view is defined, set its template function
             if (splat[view]) {
-
+                console.log("and it works");
 		// Push task of retrieving template file into deferred array.
 		// Task performs "get" request to load the template, then passes
 		// resulting template data to anonymous function to process it.
@@ -41,12 +45,33 @@ splat.utils = {
 
 	    // No Backbone view file is defined; cannot set template function.
             } else {
-                console.log(view + " not found");
+                //console.log(view + " not found");
+                console.log("view");
+                console.log(view);
+                console.log("not found");
             }
         });
 
 	// When all deferred template-loads have completed,
 	// invoke callback function.
         $.when.apply(null, deferreds).done(callback);
+    },
+    passValidation: function(inputId){
+        var tagControl;
+        //get error msg element for given inputId
+        var tagError = document.getElementById("error-msg-" + inputId);
+        tagError.innerHTML = ""; //clear error msg
+        tagControl = document.getElementById("control-" + inputId);
+        tagControl.className = "control-group";
+
+    },
+    failValidation: function(inputId, msg){
+        var tagControl;
+        //get error msg element for given inputId
+        var tagError = document.getElementById("error-msg-" + inputId);
+        tagControl = document.getElementById("control-" + inputId);
+
+        tagControl.className = tagControl.className + " error"; //add error class
+        tagError.innerHTML = msg; //set error msg
     }
 };

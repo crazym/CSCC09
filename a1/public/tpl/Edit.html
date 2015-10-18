@@ -1,0 +1,121 @@
+<div class="row">
+
+    <div class="col-xs-6">  <!-- col 1 -->
+        <div class="editActions">
+            <input type="button" id="moviesave"
+                   class="btn btn-primary save"
+                   name="save" value="Save Changes"/>
+            <input type="button" id="moviedel"
+                   class="btn btn-danger delete"
+                   name="delete" value="Delete Movie"/>
+        </div>
+        <div id="movieform">
+            <!--Title field -->
+            <div id="control-title" class="control-group">
+                <label class="control-label">Title</label>
+                <div class="controls">
+                    <input id="title" type="text" value="<%= title %>"/>
+                            <span id="error-msg-title" class="help-inline">
+                            </span>
+                </div>
+            </div>
+
+            <!--Released field-->
+            <div id="control-released" class="control-group">
+                <label class="control-label">Released</label>
+                <div class="controls">
+                    <input id="released" type="text" value="<%= released %>"/>
+                            <span id="error-msg-released" class="help-inline">
+                            </span>
+                </div>
+            </div>
+
+            <!--Director field-->
+            <div id="control-director" class="control-group">
+                <label class="control-label">Director</label>
+                <div class="controls">
+                    <input id="director" type="text" value="<%= director %>"/>
+                            <span id="error-msg-director" class="help-inline">
+                            </span>
+                </div>
+            </div>
+
+            <!--Rating field-->
+            <div id="control-rating" class="control-group">
+                <label class="control-label">Rating</label>
+                <div class="controls">
+                    <input id="rating" type="text" value="<%= rating %>"/>
+                            <span id="error-msg-rating" class="help-inline">
+                            </span>
+                </div>
+            </div>
+
+            <!--Starring field-->
+            <div id="control-starring" class="control-group">
+                <label class="control-label">Starring</label>
+                <div class="controls">
+                    <input id="starring" type="text" value="<%= starring %>"/>
+                            <span id="error-msg-starring" class="help-inline">
+                            </span>
+                </div>
+            </div>
+
+            <!--Duration field-->
+            <div id="control-duration" class="control-group">
+                <label class="control-label">Duration</label>
+                <div class="controls">
+                    <input id="duration" type="text" value="<%= duration %>"/>
+                            <span id="error-msg-duration" class="help-inline">
+                            </span>
+                </div>
+            </div>
+
+            <!--Genre field-->
+            <div id="control-genre" class="control-group">
+                <label class="control-label">Genre(s)</label>
+                <div class="controls">
+                    <input id="genre" type="text" value="<%= genre %>"/>
+                            <span id="error-msg-genre" class="help-inline">
+                            </span>
+                </div>
+            </div>
+
+            <!--Synopsis field-->
+            <div id="control-synopsis" class="control-group">
+                <label class="control-label">Synopsis</label>
+                <div class="controls">
+                    <input id="synopsis" type="text" value="<%= synopsis %>"/>
+                            <span id="error-msg-synopsis" class="help-inline">
+                            </span>
+                </div>
+            </div>
+
+            <!--Trailer URL field-->
+            <div id="control-trail" class="control-group">
+                <label class="control-label">Trailer URL</label>
+                <div class="controls">
+                    <input id="trail" type="text" value="<%= trail %>"/>
+                            <span id="error-msg-trail" class="help-inline">
+                            </span>
+                </div>
+            </div>
+
+        </div>
+    </div>  <!-- end column 1 -->
+
+    <div class="col-xs-6">  <!-- col 2 -->
+        <div id="movieimg">
+            <div class="control-group">
+                <img class="movie-edit-img" src="../public/img/icon.jpg">
+            </div>
+            <div class="control-group">
+                <div class="controls-row">
+                    <label class="control-label span1">
+                        drag & drop photo onto above image, or</label>
+                    <input type="file" id="browse-img" accept="image/*"
+                           class="span6" capture="camera"/>
+                </div>
+            </div>
+        </div>
+    </div>   <!-- end column 2 -->
+</div> <!-- row -->

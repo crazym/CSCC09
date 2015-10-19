@@ -86,32 +86,33 @@ splat.AppRouter = Backbone.Router.extend({
         console.log(splat);
         splat.movies.fetch({
                 success: function(){
-                    console.log("this.edit");
-                    console.log(this.edit);
-                    if (!this.edit) {
+                    //console.log("this.edit");
+                    //console.log(this.edit);
+                    if (!splat.edit) {
                         var movie;
                         movie = new splat.Movie();
-                        this.edit = new splat.Edit({
+                        splat.edit = new splat.Edit({
                             model: movie,
                             collection: splat.movies, tempModel: movie.toJSON()
                         });
                         console.log("create edit");
-                        console.log(this.edit);
+                        console.log(splat.edit);
                     }
-                    $('#content').html(this.edit.el);
+                    $('#content').html(splat.edit.render().el);
                 }
             }
         );
     },
 
-    edit_movie: function(){
-        this.headerView.render(); //re-render header
+    edit_movie: function(id){
+        //this.headerView.render(); //re-render header
         splat.movies.fetch({
             success: function(){
-                var movie = splat.movies.get(Backbone.history.fragment.slice(7));
-                this.edit = new splat.Edit({model: movie,
+                console.log(id);
+                var movie = splat.movies.get(id);
+                splat.edit = new splat.Edit({model: movie,
                     collection: splat.movies, tempModel: movie.toJSON()});
-                $('#content').html(this.edit.el);
+                $('#content').html(splat.edit.render().el);
             }
         });
     }

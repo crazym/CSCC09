@@ -28,7 +28,7 @@ splat.Movie = Backbone.Model.extend({
         },
         "released": function(value){
             var regex = /^([0-9]{4})$/;
-            return (value && regex.test(value) && (value >= 1910 && windowsize <= 2016)) ? {isOK: true} : {isOK: false,
+            return (value && regex.test(value) && (value >= 1910 && value<= 2016)) ? {isOK: true} : {isOK: false,
                 errMsg: "Only 4 digits allowed, the released year should between 1910 - 2016"};
         },
         "director": function(value){

@@ -17,7 +17,7 @@ splat.MoviesView = Backbone.View.extend({
         splat.movies.each(function(movie) {
             var movieView = new splat.MovieThumb({model: movie});
             browseView = browseView + movieView.el.innerHTML;
-        })
+        });
         browseView = browseView + '</ul>';
         this.$el.html(browseView);// create DOM content for DishesView
         return this;    // support chaining

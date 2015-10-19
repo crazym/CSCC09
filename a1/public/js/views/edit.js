@@ -33,13 +33,13 @@ splat.Edit = Backbone.View.extend({
         var validResult = this.model.validators[field_name](field_value);
         //if the validation failed set error tag and insert inline-help
         if (validResult.isOK == false){
-            eatz.utils.failValidation(field_name, validResult.errMsg);
+            splat.utils.failValidation(field_name, validResult.errMsg);
         } else { //if the validation passed remove error tag and inline-help
-            eatz.utils.passValidation(field_name);
+            splat.utils.passValidation(field_name);
         }
         //save value to temporary model
         this.tempModel[field_name] = field_value;
-        return validResult.isOK //return validation result
+        return validResult.isOK; //return validation result
     },
     deleteMovie: function (event) {
         event.preventDefault(); //prevent default handler
@@ -47,15 +47,18 @@ splat.Edit = Backbone.View.extend({
         //destroy current dish model and navigate to browse view on success
         this.model.destroy({
             success: function(model, response){
-                app.navigate("movies", {trigger: true, replace: true});
+                splat.app.navigate("movies", {trigger: true, replace: true});
             }});
     },
     saveMovie: function (event) {
         event.preventDefault();
         event.stopPropagation();
         var hasError = false;
+        //console.log(this.model.validators);
+
         //validate all fields in temporary dish model with validators of model
         for (var key in this.model.validators){
+            console.log(key)
             //if there's error found set hasError to true
             if (!(this.validateField(key, this.tempModel[key]))){
                 hasError = true;
@@ -70,14 +73,14 @@ splat.Edit = Backbone.View.extend({
         }
     },
     addMovie: function (){
-        var url = this.tempModel["title"]+this.tempModel["director"];
+        var url = this.tempModel["_id"];
         splat.movies.add(this.model); //add model to collection
         //save values in temporary dish model to the current dish model
         this.model.save(this.tempModel, {
             wait:true,
             success: function(movie, response){
                 //navigate to new url on success
-                app.navigate("movies/" + url, {trigger:true});
+                splat.app.navigate("movies/" + url, {trigger:true});
             },
             error: function(movie, response) {
             }
@@ -105,7 +108,7 @@ splat.Edit = Backbone.View.extend({
         var reader = new FileReader();
         reader.onload = function () {
             imgTag.attr("src", reader.result);
-        }
+        };
         reader.readAsDataURL(file);
     }
 });

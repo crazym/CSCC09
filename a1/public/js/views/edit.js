@@ -74,14 +74,16 @@ splat.Edit = Backbone.View.extend({
     },
 
     addMovie: function (){
-        var url = this.tempModel["_id"];
+        //var url = this.tempModel["_id"];
         splat.movies.add(this.model); //add model to collection
         //save values in temporary dish model to the current dish model
         this.model.save(this.tempModel, {
             wait:true,
             success: function(movie, response){
                 //navigate to new url on success
-                splat.app.navigate("movies/" + url, {trigger:true});
+                //splat.app.navigate("movies/" + url, {trigger:true});
+                //TODO  A message should be displayed on the status-notification panel
+                // indicating whether the action succeeded or failed
             },
             error: function(movie, response) {
             }

@@ -19,7 +19,6 @@ splat.Edit = Backbone.View.extend({
 
     render: function () {
         // create DOM content for EditView
-        console.log(this);
         this.$el.html(this.template(this.model.toJSON()));
         return this;    // support chaining
     },
@@ -59,11 +58,9 @@ splat.Edit = Backbone.View.extend({
         event.preventDefault();
         event.stopPropagation();
         var hasError = false;
-        //console.log(this.model.validators);
 
         //validate all fields in temporary dish model with validators of model
         for (var key in this.model.validators){
-            console.log(key)
             //if there's error found set hasError to true
             if (!(this.validateField(key, this.tempModel[key]))){
                 hasError = true;
@@ -72,11 +69,10 @@ splat.Edit = Backbone.View.extend({
         //if no error found then proceed to save values in temporary dish model
         //to the dish model
         if (!hasError){
-            //var idUrl = this.tempModel.title+this.tempModel.director;
-            this.model.set({'_id': this.tempModel._id}); //set dish id(url)
             this.addMovie(); //add and save to collection
         }
     },
+
     addMovie: function (){
         var url = this.tempModel["_id"];
         splat.movies.add(this.model); //add model to collection
@@ -91,6 +87,7 @@ splat.Edit = Backbone.View.extend({
             }
         });
     },
+
     dragImg: function(event){
         event.preventDefault();
         event.stopPropagation();

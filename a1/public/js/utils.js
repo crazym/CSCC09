@@ -25,13 +25,9 @@ splat.utils = {
          * @param {[String]} view:  root name (w/o .html) of view template file
          */
         $.each(views, function(index, view) {
-            console.log("splat is");
-            console.log(splat);
-            console.log("view is");
-            console.log(view);
+
 	    // If an associated Backbone view is defined, set its template function
             if (splat[view]) {
-                console.log("and it works");
 		// Push task of retrieving template file into deferred array.
 		// Task performs "get" request to load the template, then passes
 		// resulting template data to anonymous function to process it.

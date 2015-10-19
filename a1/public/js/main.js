@@ -53,7 +53,7 @@ splat.AppRouter = Backbone.Router.extend({
 
     about: function() {;
         //set about button active if selected
-        this.headerView.selectMenuItem("about-btn");
+        //this.headerView.selectMenuItem("about-btn");
         console.log("this is");
         console.log(this);
         console.log("splat is");
@@ -71,14 +71,15 @@ splat.AppRouter = Backbone.Router.extend({
     },
 
     movies_browse: function(){
-        this.headerView.selectMenuItem("browse-btn");
+        //this.headerView.selectMenuItem("browse-btn");
         if (!this.moviesView) {
             this.moviesView = new splat.MoviesView();
         }
-        $('#content').html(this.moviesView.el);
+        $('#content').html(this.moviesView.render().el);
     },
+
     add_movie: function(){
-        this.headerView.selectMenuItem("add-btn");
+        //this.headerView.selectMenuItem("add-btn");
         console.log("this is");
         console.log(this);
         console.log("splat is");

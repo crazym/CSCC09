@@ -42,11 +42,13 @@ footer {
     background-image: url(../img/icon.jpg);
     background-size: 45px;
     background-repeat: no-repeat;
-    text-align: right;
+    text-align: center;
     opacity: 0.5;
     font-family: Arvo;
     width: 160px;
-    margin: 10px 4px;
+    margin: 10px 2px;
+    padding-left: 35px;
+    font: 15px Arvo;
 }
 
 .single-movie {
@@ -76,6 +78,10 @@ footer {
     padding-top: -30px;
     color: white;
     font-size: 110%;
+}
+
+.help-block{
+    color: #b94a48;
 }
 
 .movie-img {

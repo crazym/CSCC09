@@ -9,94 +9,94 @@
                    class="btn btn-danger delete"
                    name="delete" value="Delete Movie"/>
         </div>
-        <div id="movieform">
+        <div id="movieform" class="form-horizontal">
             <!--Title field -->
-            <div id="control-title" class="control-group">
-                <label class="control-label">Title</label>
-                <div class="controls">
-                    <input id="title" type="text" value="<%= title %>"/>
-                            <span id="error-msg-title" class="help-inline">
-                            </span>
-                </div>
+            <div id="control-title" class="form-group">
+                <label class="col-sm-3 control-label">Title</label>
+
+                <input id="title" type="text" class="col-sm-9" placeholder="e.g. Day of the Jackal" value="<%= title %>"/>
+                    <span id="error-msg-title" class="help-block">
+                    </span>
             </div>
 
             <!--Released field-->
-            <div id="control-released" class="control-group">
-                <label class="control-label">Released</label>
+            <div id="control-released" class="form-group">
+                <label class="col-sm-3 control-label">Released</label>
                 <div class="controls">
-                    <input id="released" type="text" value="<%= released %>"/>
-                            <span id="error-msg-released" class="help-inline">
-                            </span>
+                    <input id="released"  placeholder="e.g. 1969" type="text" class="col-sm-9" value="<%= released %>"/>
+                    <div><span id="error-msg-released" class="help-block">
+                            </span></div>
                 </div>
             </div>
 
             <!--Director field-->
-            <div id="control-director" class="control-group">
-                <label class="control-label">Director</label>
+            <div id="control-director" class="form-group">
+                <label class="col-sm-3 control-label">Director</label>
                 <div class="controls">
-                    <input id="director" type="text" value="<%= director %>"/>
-                            <span id="error-msg-director" class="help-inline">
+                    <input id="director" placeholder="e.g. Steven" type="text" class="col-sm-9" value="<%= director %>"/>
+                            <span id="error-msg-director" class="help-block">
                             </span>
                 </div>
             </div>
 
             <!--Rating field-->
-            <div id="control-rating" class="control-group">
-                <label class="control-label">Rating</label>
+            <div id="control-rating" class="form-group">
+                <label class="col-sm-3 control-label">Rating</label>
                 <div class="controls">
-                    <input id="rating" type="text" value="<%= rating %>"/>
-                            <span id="error-msg-rating" class="help-inline">
+                    <input id="rating" placeholder="e.g. G, PG, PG-13, R" type="text" class="col-sm-9" value="<%= rating %>"/>
+                            <span id="error-msg-rating" class="help-block">
                             </span>
                 </div>
             </div>
 
             <!--Starring field-->
-            <div id="control-starring" class="control-group">
-                <label class="control-label">Starring</label>
+            <div id="control-starring" class="form-group">
+                <label class="col-sm-3 control-label">Starring</label>
                 <div class="controls">
-                    <input id="starring" type="text" value="<%= starring %>"/>
-                            <span id="error-msg-starring" class="help-inline">
+                    <input id="starring" placeholder="e.g. Steve Martin John Bolushi" type="text" class="col-sm-9" value="<%= starring %>"/>
+                            <span id="error-msg-starring" class="help-block">
                             </span>
                 </div>
             </div>
 
             <!--Duration field-->
-            <div id="control-duration" class="control-group">
-                <label class="control-label">Duration</label>
+            <div id="control-duration" class="form-group">
+                <label class="col-sm-3 control-label">Duration</label>
                 <div class="controls">
-                    <input id="duration" type="text" value="<%= duration %>"/>
-                            <span id="error-msg-duration" class="help-inline">
+                    <input id="duration" placeholder="e.g. 122" type="text" class="col-sm-9" value="<%= duration %>"/>
+                            <span id="error-msg-duration" class="help-block">
                             </span>
                 </div>
             </div>
 
             <!--Genre field-->
-            <div id="control-genre" class="control-group">
-                <label class="control-label">Genre(s)</label>
+            <div id="control-genre" class="form-group">
+                <label class="col-sm-3 control-label">Genre(s)</label>
 
-                    <input id="genre" type="text" value="<%= genre %>"/>
-                            <span id="error-msg-genre" class="help-inline">
+                    <input id="genre" placeholder="e.g. comedy, thriller, action" type="text" class="col-sm-9" value="<%= genre %>"/>
+                            <span id="error-msg-genre" class="help-block">
                             </span>
                
             </div>
 
             <!--Synopsis field-->
-            <div id="control-synopsis" class="control-group">
-                <label class="control-label">Synopsis</label>
+            <div id="control-synopsis" class="form-group">
+                <label class="col-sm-3 control-label">Synopsis</label>
                 <div class="controls">
-                    <input id="synopsis" type="text" value="<%= synopsis %>"/>
-                            <span id="error-msg-synopsis" class="help-inline">
+                    <input id="synopsis" placeholder="summary of the movie plot" type="text" class="col-sm-9" value="<%= synopsis %>"/>
+                            <span id="error-msg-synopsis" class="help-block">
                             </span>
                 </div>
             </div>
 
             <!--Trailer URL field-->
-            <div id="control-trail" class="control-group">
-                <label class="control-label">Trailer URL</label>
+            <div id="control-trailer" class="form-group">
+                <label class="col-sm-3 control-label">Trailer URL</label>
                 <div class="controls">
-                    <input id="trail" type="text" value="<%= trail %>"/>
-                            <span id="error-msg-trail" class="help-inline">
-                            </span>
+                    <input id="trailer" type="text" placeholder="e.g. https://www.archive.org/trailerboom.mp4" class="col-sm-9" value="<%= trailer %>"/>
+                    <div><span id="error-msg-trailer" class="help-block">
+                            </span></div>
+
                 </div>
             </div>
 

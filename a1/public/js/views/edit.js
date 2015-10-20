@@ -46,6 +46,7 @@ splat.Edit = Backbone.View.extend({
         return validResult.isOK; //return validation result
     },
     deleteMovie: function (event) {
+        splat.utils.hideNotice();
         event.preventDefault(); //prevent default handler
         event.stopPropagation();
         //destroy current dish model and navigate to browse view on success
@@ -70,10 +71,16 @@ splat.Edit = Backbone.View.extend({
         //to the dish model
         if (!hasError){
             this.addMovie(); //add and save to collection
+            splat.utils.hideNotice();
+            splat.utils.showNotice('succ', "Movie saved.");
+        } else {
+            splat.utils.hideNotice();
+            splat.utils.showNotice('warning', "Unable to save movie.");
         }
     },
 
     addMovie: function (){
+        splat.utils.hideNotice();
         var url = this.tempModel["_id"];
         splat.movies.add(this.model); //add model to collection
         //save values in temporary dish model to the current dish model

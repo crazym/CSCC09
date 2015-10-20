@@ -66,8 +66,27 @@ splat.utils = {
         //get error msg element for given inputId
         var tagError = document.getElementById("error-msg-" + inputId);
         tagControl = document.getElementById("control-" + inputId);
-
+        console.log("inpuId");
+        console.log(inputId);
         tagControl.className = tagControl.className + " error"; //add error class
         tagError.innerHTML = msg; //set error msg
+    },
+    showNotice: function(alertType, msg){
+        if (alertType == 'warning'){
+            $(".alert").html("<Strong>Error:</Strong>" + msg).addClass("alert-warning").show();
+        } else if (alertType == 'info'){
+            $(".alert").html("<Strosng>Warning:</Strosng>" + msg).addClass("alert-info").show();
+        } else if (alertType == 'succ'){
+            $(".alert").html("<Strong>Successful:</Strong>" + msg).addClass("alert-success").show();
+        }
+        $(".alert").fadeTo(500, 500);
+        window.setTimeout(function() {
+            $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                $(this).hide();
+            });
+        }, 3000);
+    },
+    hideNotice: function(){
+        $(".alert").html("").removeClass("alert-warning alert-success alert-info").hide();
     }
 };

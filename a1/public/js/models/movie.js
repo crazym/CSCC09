@@ -20,11 +20,12 @@ splat.Movie = Backbone.Model.extend({
         poster: "img/placeholder.png",
         dated:new Date()
     },
+
     validators:{
         "title": function(value){
             var regex = /([a-zA-Z0-9\,\.\!\?\-\'\*]+\s?)+/;
             return (value && regex.test(value)) ? {isOK: true} : {isOK: false,
-                errMsg: "Only 1 or more letters and/or digits allowed"};
+                errMsg: "Only 1 or more letters and/or digits with spaces and special characters are allowed"};
         },
         "released": function(value){
             var regex = /^([0-9]{4})$/;
@@ -34,17 +35,17 @@ splat.Movie = Backbone.Model.extend({
         "director": function(value){
             var regex = /([a-zA-Z0-9\,\.\!\?\-\'\*]+\s?)+/;
             return (value && regex.test(value)) ? {isOK: true} : {isOK: false,
-                errMsg: "Only 1 or more letters and/or digits allowed"};
+                errMsg: "Director must consist of one or more letter characters optionally with digit and space characters and special characters: ',', '.', '!', '?', '-', ''', '*'."};
         },
         "starring": function(value){
             var regex = /((([a-zA-Z0-9\-\']+\s?)+,?)+\s?)+/;
             return (value && regex.test(value)) ? {isOK: true} : {isOK: false,
-                errMsg: "Only 1 or more letters and/or digits allowed"};
+                errMsg: "Starring must consist of one-or-more comma-separated sequences of whitespace-separated words, each such word which may optionally include special characters: '-', '''"};
         },
         "genre": function(value){
             var regex = /((([a-zA-Z0-9\-\']+\s?)+,?)+\s?)+/;
             return (value && regex.test(value)) ? {isOK: true} : {isOK: false,
-                errMsg: "Only 1 or more letters and/or digits allowed"};
+                errMsg: "Genre must consist of one-or-more comma-separated sequences of whitespace-separated words, each such word which may optionally include special characters: '-', '''"};
         },
         "rating": function(value){
             var rate = ['G', 'PG', 'PG-13', 'R', 'NC-17', 'NR'];
@@ -54,12 +55,12 @@ splat.Movie = Backbone.Model.extend({
         "duration": function(value){
             var regex = /^([0-9]{1,3})$/;
             return (value && regex.test(value) && (value >= 0 && value<= 999)) ? {isOK: true} : {isOK: false,
-                errMsg: "Only 4 digits allowed, the released year should between 1910 - 2016"};
+                errMsg: "Duration must consist of an integer in the range 0-999"};
         },
         "synopsis": function(value){
             var regex = /^(\w+\s?)+/;
-            return (value && regex.test(value) && (value >= 0 && value<= 999)) ? {isOK: true} : {isOK: false,
-                errMsg: "Only 4 digits allowed, the released year should between 1910 - 2016"};
+            return (value && regex.test(value)) ? {isOK: true} : {isOK: false,
+                errMsg: "Synopsis must consist of a non-empty word list"};
         },
         "trailer": function(value){
             var httpRegex = /^(http)(s?)\:\/\//
@@ -67,7 +68,7 @@ splat.Movie = Backbone.Model.extend({
             var content = /(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*$)/
             var regex = new RegExp(httpRegex.source+domain.source+content.source);
             return (value && regex.test(value)) ? {isOK: true} : {isOK: false,
-                errMsg: "Only valid url allowed"};
+                errMsg: "Only empty string or a properly-formatted url are allowed"};
         }
     }
 

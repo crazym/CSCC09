@@ -20,6 +20,7 @@ footer {
     color: #C0C0C0;
 }
 
+/* Home Page */
 .home-menu {
     font-size: 125%;
 }
@@ -49,8 +50,11 @@ footer {
     margin: 10px 2px;
     padding-left: 35px;
     font: 15px Arvo;
+    color: #080808;
 }
 
+
+/* Movies Page */
 .single-movie {
     margin-left: 0px !important;
     margin-right: 15px;
@@ -74,14 +78,9 @@ footer {
     padding: 2px;
 }
 
-.about {
-    padding-top: -30px;
-    color: white;
-    font-size: 110%;
-}
 
-.help-block{
-    color: #b94a48;
+.help-inline{
+    color: #a94442; /*same color as the has-error class highlight*/
 }
 
 .movie-img {
@@ -99,6 +98,14 @@ footer {
 
 legend {
     font-family: Andika;
+}
+
+
+/* About page */
+.about {
+    padding-top: -30px;
+    color: white;
+    font-size: 110%;
 }
 
 #aboutApp {

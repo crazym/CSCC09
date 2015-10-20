@@ -72,6 +72,9 @@ splat.utils = {
         tagControl.className = tagControl.className + " has-error"; //add error class
         tagError.innerHTML = msg; //set error msg
     },
+
+
+    /* code for notification panel */
     showNotice: function(alertType, msg){
         if (alertType == 'warning'){
             $(".alert").html("<Strong>Error:</Strong>" + msg).addClass("alert-warning").show();
@@ -87,7 +90,26 @@ splat.utils = {
             });
         }, 3000);
     },
+
     hideNotice: function(){
         $(".alert").html("").removeClass("alert-warning alert-success alert-info").hide();
+    },
+
+    // Resize sourceImg, returning result as a DataURL value. Type,
+    // quality are optional params for image-type and quality setting
+    resize: function(sourceImg, type, quality) {
+        var type = type || "image/jpeg"; // default MIME image type
+        var quality = quality || "0.95"; // tradeoff quality vs size
+        var image = new Image(), MAX_HEIGHT = 300, MAX_WIDTH = 450;
+        image.src = sourceImg;
+        image.height *= MAX_HEIGHT / image.height; // scale height
+        image.width *= MAX_WIDTH / image.width; // scale height
+        var canvas = document.createElement("canvas");
+        canvas.width = image.width; // scale canvas to match image
+        canvas.height = image.height;
+        var ctx = canvas.getContext("2d"); // get 2D rendering context
+        ctx.drawImage(image,0,0, image.width, image.height); // render
+        return canvas.toDataURL(type, quality);
     }
+
 };

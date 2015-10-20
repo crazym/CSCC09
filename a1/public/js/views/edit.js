@@ -135,19 +135,18 @@ splat.Edit = Backbone.View.extend({
         this.pictureFile = event.target.files[0];
         if (this.pictureFile.type.match('image.*')) {
             this.readImg(this.pictureFile);
-        } else {
-            //TODO display error notification
         }
-
+        // error notification handled in saving the movie action
     },
 
     readImg: function(file){
         var self = this;
         var reader = new FileReader();
         reader.onload = function (event) {
+            var resized = splat.utils.resize(reader.result);
             var targetImgElt = $('.movie-edit-img');
-            targetImgElt.attr('src', reader.result);
-            self.tempModel['poster']= reader.result;
+            targetImgElt.attr('src', resized);
+            self.tempModel['poster']= resized;
         };
         reader.readAsDataURL(file);
     }

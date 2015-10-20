@@ -66,7 +66,7 @@ splat.AppRouter = Backbone.Router.extend({
 
                     var movie;
                     movie = new splat.Movie();
-                    splat.edit = new splat.Edit({
+                    splat.edit = new splat.Details({
                         model: movie,
                         collection: splat.movies, tempModel: movie.toJSON()
                     });
@@ -80,7 +80,7 @@ splat.AppRouter = Backbone.Router.extend({
         splat.movies.fetch({
             success: function(){
                 var movie = splat.movies.get(id);
-                splat.edit = new splat.Edit({model: movie,
+                splat.edit = new splat.Details({model: movie,
                     collection: splat.movies, tempModel: movie.toJSON()});
                 $('#content').html(splat.edit.render().el);
             }
@@ -91,7 +91,7 @@ splat.AppRouter = Backbone.Router.extend({
 // Load HTML templates for Home, Header, About views, and when
 // template loading is complete, instantiate a Backbone router
 // with history.
-splat.utils.loadTemplates(['Home', 'Header', 'About', 'MovieThumb', 'Edit'], function() {
+splat.utils.loadTemplates(['Home', 'Header', 'About', 'MovieThumb', 'Details'], function() {
     splat.app = new splat.AppRouter();
     Backbone.history.start();
 });

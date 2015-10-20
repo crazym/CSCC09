@@ -80,9 +80,9 @@ splat.utils = {
         } else if (alertType == 'succ'){
             $(".alert").html("<Strong>Successful:</Strong>" + msg).addClass("alert-success").show();
         }
-        $(".alert").fadeTo(500, 500);
+        $(".alert").fadeOut(5000);
         window.setTimeout(function() {
-            $(".alert").fadeTo(500, 0).slideUp(500, function(){
+            $(".alert").fadeOut(5000).slideUp(500, function(){
                 $(this).hide();
             });
         }, 3000);

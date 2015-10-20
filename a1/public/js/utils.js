@@ -59,7 +59,7 @@ splat.utils = {
         var tagError = document.getElementById("error-msg-" + inputId);
         tagError.innerHTML = ""; //clear error msg
         tagControl = document.getElementById("control-" + inputId);
-        tagControl.className = "control-group";
+        tagControl.className = "form-group";
 
     },
 
@@ -69,9 +69,7 @@ splat.utils = {
         var tagError = document.getElementById("error-msg-" + inputId);
 
         tagControl = document.getElementById("control-" + inputId);
-        console.log("inpuId");
-        console.log(inputId);
-        tagControl.className = tagControl.className + " error"; //add error class
+        tagControl.className = tagControl.className + " has-error"; //add error class
         tagError.innerHTML = msg; //set error msg
     },
     showNotice: function(alertType, msg){

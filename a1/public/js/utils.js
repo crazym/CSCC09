@@ -52,6 +52,7 @@ splat.utils = {
 	// invoke callback function.
         $.when.apply(null, deferreds).done(callback);
     },
+
     passValidation: function(inputId){
         var tagControl;
         //get error msg element for given inputId
@@ -61,13 +62,15 @@ splat.utils = {
         tagControl.className = "control-group";
 
     },
+
     failValidation: function(inputId, msg){
         var tagControl;
         //get error msg element for given inputId
         var tagError = document.getElementById("error-msg-" + inputId);
-        tagControl = document.getElementById("control-" + inputId);
+        //tagControl = document.getElementById("control-" + inputId);
+        console.log(inputId);
 
-        tagControl.className = tagControl.className + " error"; //add error class
+        //tagControl.className = tagControl.className + " error"; //add error class
         tagError.innerHTML = msg; //set error msg
     }
 };

@@ -12,6 +12,7 @@ splat.Edit = Backbone.View.extend({
         "drop": "dropImg"
 
     },
+
     initialize: function (options) {
         this.render();
         this.tempModel = options.tempModel;
@@ -32,6 +33,7 @@ splat.Edit = Backbone.View.extend({
             this.validateField(field_name, field_value);
         }
     },
+
     validateField: function(field_name, field_value){
         //validate name-value pair through model's validators
         var validResult = this.model.validators[field_name](field_value);
@@ -45,6 +47,7 @@ splat.Edit = Backbone.View.extend({
         this.tempModel[field_name] = field_value;
         return validResult.isOK; //return validation result
     },
+
     deleteMovie: function (event) {
         event.preventDefault(); //prevent default handler
         event.stopPropagation();
@@ -54,6 +57,7 @@ splat.Edit = Backbone.View.extend({
                 splat.app.navigate("movies", {trigger: true, replace: true});
             }});
     },
+
     saveMovie: function (event) {
         event.preventDefault();
         event.stopPropagation();
@@ -90,10 +94,19 @@ splat.Edit = Backbone.View.extend({
         });
     },
 
+    // image file select
     dragImg: function(event){
-        event.preventDefault();
+        //event.preventDefault();
+        //event.stopPropagation();
+        // don't let parent element catch event
         event.stopPropagation();
+        // prevent default to enable drop event
+        event.preventDefault();
+        // jQuery event doesn’t have dataTransfer
+        // field - so use originalEvent
+        event.originalEvent.dataTransfer.dropEffect = 'copy';
     },
+
     dropImg: function(event){
         event.preventDefault();
         event.stopPropagation();
@@ -101,17 +114,33 @@ splat.Edit = Backbone.View.extend({
         var pictureFile = event.originalEvent.dataTransfer.files[0];
         this.readImg(pictureFile);
     },
+
     browseImg: function(event) {
         event.preventDefault();
         event.stopPropagation();
-        var pictureFile = event.target.files[0];
-        this.readImg(pictureFile);
+        this.pictureFile = event.target.files[0];
+        console.log(this.pictureFile.type)
+        if (this.pictureFile.type.match('image.*')) {
+            this.readImg(this.pictureFile);
+        } else {
+            //TODO display error notification
+        }
+
     },
+
     readImg: function(file){
-        var imgTag = this.$el.find("img");
+        var self = this;
+        //var imgTag = this.$el.find("img");
         var reader = new FileReader();
-        reader.onload = function () {
-            imgTag.attr("src", reader.result);
+        reader.onload = function (event) {
+            var targetImgElt = $('#movie-edit-img');
+            console.log(reader.result);
+            console.log(targetImgElt);
+            targetImgElt.src = reader.result;
+            //imgTag.attr("src", reader.result);
+            //self.model.set('poster', reader.result);
+            self.tempModel['poster']= reader.result;
+            console.log(self.tempModel);
         };
         reader.readAsDataURL(file);
     }

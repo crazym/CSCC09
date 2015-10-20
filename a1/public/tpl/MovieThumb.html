@@ -3,10 +3,19 @@
         <div class="some_class">
             <a href="#movies/<%= _id %>" class="plain">
 
-                <div class="some_class_2">
-                    <%= title %> (<%= released %>)<br/>
+              <video class="img-responsive" controls poster="<%= poster %>" >
+              <source src="<%= trailer %>" type="video/mp4"/>
+               fallback
+              Your browser does not support the video format.
+              </video>
 
-                </div>
+              <div class="some_class_2">
+                <%= title %> (<%= released %>)<br/>
+                Directed by: <%= director %> <br/>
+                Starring: <%= starring %> <br/>
+                Genres: <%= genre %> Rating: <%= rating %> <br/>
+              </div>
+
             </a>
         </div>
     </div>

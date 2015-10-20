@@ -32,6 +32,8 @@ splat.Edit = Backbone.View.extend({
         if (field_name in this.model.validators) {
             this.validateField(field_name, field_value);
         }
+        //splat.utils.hideNotice();
+        splat.utils.showNotice('info', "Movie attributes updated; to make changes persistent, click \"Save Changes\" button.");
     },
 
     validateField: function(field_name, field_value){
@@ -52,11 +54,18 @@ splat.Edit = Backbone.View.extend({
         splat.utils.hideNotice();
         event.preventDefault(); //prevent default handler
         event.stopPropagation();
-        //destroy current dish model and navigate to browse view on success
+        //destroy current movie model and navigate to browse view on success
         this.model.destroy({
             success: function(model, response){
+                splat.utils.hideNotice();
+                splat.utils.showNotice('succ', "Movie deleted, redirsting to browsing page.");
                 splat.app.navigate("movies", {trigger: true, replace: true});
-            }});
+            },
+            error: function(movie, response) {
+                splat.utils.hideNotice();
+                splat.utils.showNotice('warning', "Sorry, unable to delete this movie instance.");
+            }
+        });
     },
 
     saveMovie: function (event) {
@@ -64,22 +73,17 @@ splat.Edit = Backbone.View.extend({
         event.stopPropagation();
         var hasError = false;
 
-        //validate all fields in temporary dish model with validators of model
+        //validate all fields in temporary movie model with validators of model
         for (var key in this.model.validators){
             //if there's error found set hasError to true
             if (!(this.validateField(key, this.tempModel[key]))){
                 hasError = true;
             }
         }
-        //if no error found then proceed to save values in temporary dish model
-        //to the dish model
+        //if no error found then proceed to save values in temporary movie model
+        //to the movie model
         if (!hasError){
             this.addMovie(); //add and save to collection
-            splat.utils.hideNotice();
-            splat.utils.showNotice('succ', "Movie saved.");
-        } else {
-            splat.utils.hideNotice();
-            splat.utils.showNotice('warning', "Unable to save movie.");
         }
     },
 
@@ -88,16 +92,18 @@ splat.Edit = Backbone.View.extend({
         splat.utils.hideNotice();
         //var url = this.tempModel["_id"];
         splat.movies.add(this.model); //add model to collection
-        //save values in temporary dish model to the current dish model
+        //save values in temporary movie model to the current movie model
         this.model.save(this.tempModel, {
             wait:true,
             success: function(movie, response){
-                //navigate to new url on success
-                //splat.app.navigate("movies/" + url, {trigger:true});
-                //TODO  A message should be displayed on the status-notification panel
+                //display a message on the status-notification panel
                 // indicating whether the action succeeded or failed
+                splat.utils.hideNotice();
+                splat.utils.showNotice('succ', "Congrats! Movie saved.");
             },
             error: function(movie, response) {
+                splat.utils.hideNotice();
+                splat.utils.showNotice('warning', "Sorry, unable to save movie.");
             }
         });
     },

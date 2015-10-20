@@ -13,13 +13,13 @@ splat.MoviesView = Backbone.View.extend({
 
     render: function () {
         var browseView = '<ul class="thumbnails">';
-        //add each dish model from the collection into list of html
+        //add each movie model from the collection into list of html
         splat.movies.each(function(movie) {
             var movieView = new splat.MovieThumb({model: movie});
             browseView = browseView + movieView.el.innerHTML;
         });
         browseView = browseView + '</ul>';
-        this.$el.html(browseView);// create DOM content for DishesView
+        this.$el.html(browseView);// create DOM content for MoviesView
         return this;    // support chaining
     }
 

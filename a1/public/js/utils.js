@@ -76,7 +76,7 @@ splat.utils = {
         if (alertType == 'warning'){
             $(".alert").html("<Strong>Error:</Strong>" + msg).addClass("alert-warning").show();
         } else if (alertType == 'info'){
-            $(".alert").html("<Strosng>Warning:</Strosng>" + msg).addClass("alert-info").show();
+            $(".alert").html("<Strosng>Notice:</Strosng>" + msg).addClass("alert-info").show();
         } else if (alertType == 'succ'){
             $(".alert").html("<Strong>Successful:</Strong>" + msg).addClass("alert-success").show();
         }

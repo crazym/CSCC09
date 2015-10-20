@@ -3,10 +3,10 @@
         <div class="single-movie-thumbnail">
             <a href="#movies/<%= _id %>" class="plain">
 
-              <video class="img-responsive" controls poster="<%= poster %>" >
-              <source src="<%= trailer %>" type="video/mp4"/>
-               fallback
-              Your browser does not support the video format.
+              <video class="img-responsive" preload="none" controls poster="<%= poster %>" >
+                  <source src="<%= trailer %>" type="video/mp4"/>
+                   fallback
+                  Your browser does not support the video format.
               </video>
 
               <div class="some_class_2">

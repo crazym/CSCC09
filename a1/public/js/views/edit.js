@@ -127,7 +127,6 @@ splat.Edit = Backbone.View.extend({
         event.preventDefault();
         event.stopPropagation();
         this.pictureFile = event.target.files[0];
-        console.log(this.pictureFile.type)
         if (this.pictureFile.type.match('image.*')) {
             this.readImg(this.pictureFile);
         } else {
@@ -138,17 +137,11 @@ splat.Edit = Backbone.View.extend({
 
     readImg: function(file){
         var self = this;
-        //var imgTag = this.$el.find("img");
         var reader = new FileReader();
         reader.onload = function (event) {
             var targetImgElt = $('#movie-edit-img');
-            console.log(reader.result);
-            console.log(targetImgElt);
             targetImgElt.src = reader.result;
-            //imgTag.attr("src", reader.result);
-            //self.model.set('poster', reader.result);
             self.tempModel['poster']= reader.result;
-            console.log(self.tempModel);
         };
         reader.readAsDataURL(file);
     }

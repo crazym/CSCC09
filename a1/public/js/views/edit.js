@@ -139,8 +139,8 @@ splat.Edit = Backbone.View.extend({
         var self = this;
         var reader = new FileReader();
         reader.onload = function (event) {
-            var targetImgElt = $('#movie-edit-img');
-            targetImgElt.src = reader.result;
+            var targetImgElt = $('.movie-edit-img');
+            targetImgElt.attr('src', reader.result);
             self.tempModel['poster']= reader.result;
         };
         reader.readAsDataURL(file);

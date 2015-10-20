@@ -21,12 +21,6 @@ splat.MoviesView = Backbone.View.extend({
         browseView = browseView + '</ul>';
         this.$el.html(browseView);// create DOM content for DishesView
         return this;    // support chaining
-    },
-    editMovie: function(event){
-        //get the current event target and navigate to defined id (name+venue)
-        var movieName = $(event.currentTarget).find(".single-movie-title").text();
-        var directorName = $(event.currentTarget).find(".single-movie-director").text();
-        splat.app.navigate("movies/" + movieName + directorName, {trigger:true});
     }
 
 });

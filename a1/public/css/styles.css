@@ -58,36 +58,31 @@ footer {
 .single-movie {
     margin-left: 0px !important;
     margin-right: 15px;
-    text-decoration: none;
-    overflow: hidden;
-    display: block;
-    padding: 2px;
 }
 
 .single-movie-thumbnail {
-    border-color: #25383C;
-    border-style: solid;
-    border-width: 1px;
     position: relative;
-    height: 315px;
-    width:  282px;
+    border-width: 1px;
+    border-radius: 4px;
+    border-color: #25383C;
     margin-right: 5px;
-    text-align: center;
-    background-color: #dbc59e;
-    font-family: Arvo;
+    border-style: solid;
+    font-size: 80%;
+    text-align: right;
+    font-family: "Verdana", Geneva, Helvetica, sans-serif;
     padding: 2px;
 }
-
 
 .help-inline{
     color: #a94442; /*same color as the has-error class highlight*/
 }
 
 .movie-img {
-    dispay: block;
+    display: block;
     max-height: 210px !important;
     max-width: 280px !important;
     margin-bottom: 10px;
+    text-align: center;
 }
 
 .movie-edit-img {

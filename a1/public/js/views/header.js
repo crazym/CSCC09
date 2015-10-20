@@ -21,6 +21,7 @@ splat.Header = Backbone.View.extend({
     render: function () {
         // set the view element ($el) HTML content using its template
         this.$el.html(this.template());
+        splat.utils.hideNotice();
         return this;    // support method chaining
     },
 

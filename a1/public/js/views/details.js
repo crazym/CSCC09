@@ -1,5 +1,6 @@
 var splat =  splat || {};
 
+
 splat.Details = Backbone.View.extend({
 
     events: {
@@ -24,6 +25,7 @@ splat.Details = Backbone.View.extend({
         return this;    // support chaining
     },
 
+    /* actions taken Whenever "focus" leaves a form field */
     inputChange: function (event){
         // if change input event is found, try to validate new input value
         var field_name = event.target.id;
@@ -32,6 +34,8 @@ splat.Details = Backbone.View.extend({
         if (field_name in this.model.validators) {
             this.validateField(field_name, field_value);
         }
+        //post a message in the status-notification panel (defined below) when form-focus changes,
+        //indicating that the change isn't permanent until "Save Changes" is clicked
         //splat.utils.hideNotice();
         splat.utils.showNotice('info', "Movie attributes updated; to make changes persistent, click \"Save Changes\" button.");
     },
@@ -129,10 +133,12 @@ splat.Details = Backbone.View.extend({
         this.readImg(pictureFile);
     },
 
+    // choose file from file explorer
     browseImg: function(event) {
         event.preventDefault();
         event.stopPropagation();
         this.pictureFile = event.target.files[0];
+        //check file type
         if (this.pictureFile.type.match('image.*')) {
             this.readImg(this.pictureFile);
         }
@@ -143,6 +149,7 @@ splat.Details = Backbone.View.extend({
         var self = this;
         var reader = new FileReader();
         reader.onload = function (event) {
+            //resize img to match limitations
             var resized = splat.utils.resize(reader.result);
             var targetImgElt = $('.movie-edit-img');
             targetImgElt.attr('src', resized);

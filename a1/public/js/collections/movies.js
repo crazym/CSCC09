@@ -1,5 +1,6 @@
 var splat =  splat || {};
 
+/*  collections that contains all saved movies */
 splat.Movies = Backbone.Collection.extend({
     // identify collection’s model
     model:splat.Movie,

@@ -26,11 +26,6 @@ splat.AppRouter = Backbone.Router.extend({
 
 	// insert the rendered Header view element into the document DOM
         $('.header').html(this.headerView.render().el);
-        this.home;
-        this.about;
-        this.movies_browse;
-        this.add_movie;
-        // ?? this.edit_movie;
     },
 
     home: function() {
@@ -59,8 +54,8 @@ splat.AppRouter = Backbone.Router.extend({
         $('#content').html(this.moviesView.render().el);
     },
 
+    /* add a new movie */
     add_movie: function(){
-
         splat.movies.fetch({
                 success: function(){
 
@@ -76,6 +71,7 @@ splat.AppRouter = Backbone.Router.extend({
         );
     },
 
+    /* edit an existing movie */
     edit_movie: function(id){
         splat.movies.fetch({
             success: function(){

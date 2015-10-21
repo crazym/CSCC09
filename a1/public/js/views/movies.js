@@ -1,5 +1,7 @@
 var splat =  splat || {};
 
+/* utilizes template MovieThumb that defines the markup for individual movie
+thumbnails displayed in the browse view. */
 splat.MoviesView = Backbone.View.extend({
 
     events: {

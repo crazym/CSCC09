@@ -1,5 +1,6 @@
 var splat =  splat || {};
 
+/* template for single movie model thumbnail */
 splat.MovieThumb = Backbone.View.extend({
 
     initialize: function () {

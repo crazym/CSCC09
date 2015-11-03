@@ -1,47 +1,28 @@
-'use strict';
+var splat =  splat || {};
 
-var splat = splat || {};  // our app's namespace
+/* utilizes template MovieThumb that defines the markup for individual movie
+thumbnails displayed in the browse view. */
+splat.MoviesView = Backbone.View.extend({
 
-splat.MovieView = Backbone.View.extend({
-
-
-    moviesTemplate: _.template([
-        "<% movies.each(function(movie) { %>",
-        "<%= movieThumbTemplate(movie.toJSON()) %>",
-        "<% }); %>"
-    ].join('')),
-
-    initialize: function() {
-        // load markup template for HelloWorld Thumbnail view
-        //this.loadThumbTemplate = $.get('tpl/MovieThumb.html');
-        //this.loadThumbTemplate.done(function(markup) {
-        //    // keep an app-level reference to the template markup for views to ref
-        //    console.log("loading thumb done");
-        //    splat.thumbMarkup = markup;
-        //})
+    events: {
+        "click li": "editMovie"
     },
 
-    // "$el" is a jQuery-object wrapper around "el", which enables you
-    // to use jQuery methods like "html()" to set the content of elements.
-    render: function(){
+    initialize: function () {
+        splat.movies.fetch();
+        this.render();
+    },
 
-        //this.loadThumbTemplate.done(function(markup) {
-        //    // keep an app-level reference to the template markup for views to ref
-        //    console.log("loading thumb done");
-        //    splat.thumbMarkup = markup;
-        //    //this.template = _.template(markup);
-        //});
-        //
-        ////console.log("rendering browing view");
-        this.template = _.template(splat.thumbMarkup);
-        //console.log(this.template(this.collection));
-
-        // set the view element ($el) HTML content using its template
-        var moviesMarkup = this.moviesTemplate({
-            movies: this.collection,
-            movieThumbTemplate: this.template
+    render: function () {
+        var browseView = '<ul class="thumbnails">';
+        //add each movie model from the collection into list of html
+        splat.movies.each(function(movie) {
+            var movieView = new splat.MovieThumb({model: movie});
+            browseView = browseView + movieView.el.innerHTML;
         });
-        this.$el.append(moviesMarkup);
-        return this;    // support method chaining
+        browseView = browseView + '</ul>';
+        this.$el.html(browseView);// create DOM content for MoviesView
+        return this;    // support chaining
     }
+
 });

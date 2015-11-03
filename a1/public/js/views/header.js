@@ -13,17 +13,24 @@ splat.Header = Backbone.View.extend({
             this.selectMenuItem(e.currentTarget)}
     },
 
+    initialize: function () {
+        this.render();
+    },
+
     // render the View
     render: function () {
         // set the view element ($el) HTML content using its template
         this.$el.html(this.template());
+        splat.utils.hideNotice();
         return this;    // support method chaining
     },
 
-     /* function triggered on click of menu item to set that menu item to active */
+    /* function triggered on click of menu item to set that menu item to active */
     selectMenuItem: function(menuItem) {
+        //this.render();
         // remove the active class on any current menu item
-        $('.menu-item').removeClass('active')
+        $('.menu-item').removeClass('active');
+        //var btn = document.getElementById(menuItem);
         $(menuItem).addClass('active')
     }
 });

@@ -12,37 +12,26 @@ splat.AppRouter = Backbone.Router.extend({
         "": "home",
         "home": "home",
         "about": "about",
-        "movies": "browse",
-        "movies/add": "details",
-        "movies/:id": "details"
-
+        "movies": "movies_browse",
+        "movies/add": "add_movie",
+        "movies/:id": "edit_movie"
     },
 
     // When an instance of an AppRouter is declared, create a Header view
     initialize: function() {
-	// instantiate a Header view
-        this.headerView = new splat.Header();  
+        // instantiate a Header view
+        if (!this.headerView) {
+            this.headerView = new splat.Header();
+        };
+
 	// insert the rendered Header view element into the document DOM
         $('.header').html(this.headerView.render().el);
-
-        // initialize this.collection of Names models
-        this.collection = new splat.Movies();
-        this.moviesFetch = this.collection.fetch();
-        var self = this;
-        this.moviesFetch.done(function(movies,response) {
-            //window.localStorage.clear();
-            if (movies.length === 0) {
-                var movies= ["Alpha", "Beta", "Charlie", "Delta", "Epsilon"];
-                movies.map(function(movie) {
-                    var movieModel = new splat.Movie({title: movie});
-                    self.collection.create(movieModel);
-                });
-            }
-        });
     },
 
     home: function() {
-	// If the Home view doesn't exist, instantiate one
+        this.headerView.render(); //re-render header
+
+	    // If the Home view doesn't exist, instantiate one
         if (!this.homeView) {
             this.homeView = new splat.Home();
         };
@@ -51,7 +40,6 @@ splat.AppRouter = Backbone.Router.extend({
     },
 
     about: function() {
-	// If the About view doesn't exist, instantiate one
         if (!this.aboutView) {
             this.aboutView = new splat.About();
         };
@@ -59,47 +47,47 @@ splat.AppRouter = Backbone.Router.extend({
         $('#content').html(this.aboutView.render().el);
     },
 
-    details: function() {
-        // instantiate a HelloWorld model, with a name-field value
-        if (!this.movieModel) {
-            this.movieModel = new splat.Movie();
+    movies_browse: function(){
+        if (!this.moviesView) {
+            this.moviesView = new splat.MoviesView();
         }
-        if (!this.detailsView) {
-            this.detailsView = new splat.Details({model: this.movieModel});
-        }
-        // render the helloWorld View, and insert its root element "el"
-        // as the value of the view's #content element.
-        $('#content').html(this.detailsView.render().el);
+        $('#content').html(this.moviesView.render().el);
     },
 
-    browse: function() {
-        var self = this;  // keep a reference to this object for nested func
-        // When we know that the names collection fetch() is complete,
-        // we can pass it to the constructor for a HelloWorldView.
-        // Note, we can have multiple .done() calls for a single Promise.
-        this.moviesFetch.done(function(movie,response) {
-            // now instantiate a HelloWorld view using fetched collection
-            console.log(self.collection);
-            self.movieView = new splat.MovieView({collection: self.collection});
+    /* add a new movie */
+    add_movie: function(){
+        splat.movies.fetch({
+                success: function(){
 
-            // render the helloWorld View, and insert its root element "el"
-            // as the value of the view's #content element.
-            $('#content').html(self.movieView.render().el);
+                    var movie;
+                    movie = new splat.Movie();
+                    splat.edit = new splat.Details({
+                        model: movie,
+                        collection: splat.movies, tempModel: movie.toJSON()
+                    });
+                    $('#content').html(splat.edit.render().el);
+                }
+            }
+        );
+    },
+
+    /* edit an existing movie */
+    edit_movie: function(id){
+        splat.movies.fetch({
+            success: function(){
+                var movie = splat.movies.get(id);
+                splat.edit = new splat.Details({model: movie,
+                    collection: splat.movies, tempModel: movie.toJSON()});
+                $('#content').html(splat.edit.render().el);
+            }
         });
     }
-
 });
 
 // Load HTML templates for Home, Header, About views, and when
 // template loading is complete, instantiate a Backbone router
 // with history.
-splat.utils.loadTemplates(['Home', 'Header', 'About', 'Details'], function() {
-    // load markup template for HelloWorld Thumbnail view
-    splat.loadThumbTemplate = $.get('tpl/MovieThumb.html');
-    splat.loadThumbTemplate.done(function(markup) {
-        // keep an app-level reference to the template markup for views to ref
-        splat.thumbMarkup = markup;
-    });
+splat.utils.loadTemplates(['Home', 'Header', 'About', 'MovieThumb', 'Details'], function() {
     splat.app = new splat.AppRouter();
     Backbone.history.start();
 });

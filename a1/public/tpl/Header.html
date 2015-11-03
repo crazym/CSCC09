@@ -11,17 +11,19 @@
             </button>
 
             <a class="menu-item navbar-brand home-menu" href="#">Splat!</a>
-
 	    </div>
 
         <div id="nav-collapse" class="navbar-collapse collapse">
+            <!--left aligned items-->
             <ul class="nav navbar-nav pull-left">
-                <li class="menu-item browse-menu"><a href="#movies">Browse Movies</a></li>
-                <li class="menu-item add-menu"><a href="#movies/add">Add Movie</a></li>
+                <li class="menu-item"><a id="browse-btn" href="#movies">Browse Movies</a></li>
+                <li class="menu-item"><a id="add-btn" href="#movies/add">Add Movie</a></li>
             </ul>
+            <!--right aligned items-->
             <ul class="nav navbar-nav pull-right">
                 <li class="menu-item about-menu"><a href="#about">About</a></li>
             </ul>
         </div> <!--/.nav-collapse -->
     </div>
 </nav>
+<div class="alert" style="display: none"></div>

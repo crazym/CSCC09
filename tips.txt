@@ -1,7 +1,0 @@
-scp -r zhangmao@iits-b473-20058.utsc-labs.utoronto.ca:/cmshome/zhangmao/cscc09f15_space/t1/ ./t1
-
-
-
-============ Ass1 Step2 ===================
-= Uncaught TypeError: splat.Details is not a function
----> mada, rmb to include js file in index.html!!!

@@ -1,0 +1,5 @@
+1. which parts of the assignment caused you the most difficulty and why:
+* Edit page that saves to LocalStorage
+* It's easy to get lost at the very beginning, but once you get partials working, everything seemed to be clear.
+2. features that you feel are noteworthy:
+* About page! we liked the bios of ourselves :)

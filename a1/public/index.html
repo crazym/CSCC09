@@ -8,11 +8,11 @@
     <!-- ensure proper rendering and touch zooming -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bootstrap CSS definitions -->
-    <link href="css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap.css">
     <!-- optional stylesheet theme included with Bootstrap -->
-    <link href="css/bootstrap-theme.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap-theme.css">
     <!-- your own customized style rules -->
-    <link href="css/styles.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
     <link rel="icon" type="image/ico" href="img/favicon.ico"/>
   </head>
   <body>
@@ -33,6 +33,14 @@
 
     <!-- load scripts last for better UI performance -->
 
+
+    <!--templates-->
+    <script type="text/template" src="tpl/Home.html"></script>
+    <script type="text/template" src="tpl/About.html"></script>
+    <script type="text/template" src="tpl/Header.html"></script>
+    <script type="text/template" src="tpl/MovieThumb.html"></script>
+    <script type="text/template" src="tpl/Details.html"></script>
+
     <!-- library scripts you use -->
     <script src="js/lib/jquery-min.js"></script>
     <script src="js/lib/underscore-min.js"></script>
@@ -42,15 +50,17 @@
 
     <!-- scripts you define -->
     <script src="js/utils.js"></script>
-    <script src="js/models/movie.js"></script>
-    <script src="js/collections/movies.js"></script>
-    <script src="js/views/header.js"></script>
     <script src="js/views/home.js"></script>
+    <script src="js/views/header.js"></script>
+    <script src="js/views/about.js"></script>
     <script src="js/views/movie.js"></script>
     <script src="js/views/movies.js"></script>
-    <script src="js/views/about.js"></script>
     <script src="js/views/details.js"></script>
     <script src="js/main.js"></script>
+
+    <script src="js/models/movie.js"></script>
+    <script src="js/collections/movies.js"></script>
+
 
   </body>
 </html>

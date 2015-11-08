@@ -9,9 +9,9 @@
  * the value returned by require(), in this case e.g. splat.api
  * The convention is use the same name for variable and module.
  */
-var http = require("http"),   // ADD CODE
+var http = require("http"),
 // NOTE, use the version of "express" linked to the assignment handout
-    express = require("express"),   // ADD CODE
+    express = require("express"),
     fs = require("fs"),
     path = require("path"),
     url = require("url"),
@@ -28,7 +28,7 @@ var http = require("http"),   // ADD CODE
     // config is an object module, that defines app-config attribues,
     // such as "port", DB parameters
     config = require("./config"),
-    splat = require('./routes/....js');  // route handlers ... ADD CODE
+    splat = require('./routes/splat.js');  // route handlers
 
 var app = express();  // Create Express app server
 
@@ -42,7 +42,7 @@ app.set('port', process.env.PORT || config.port);
 //app.use(basicAuth('username', 'password'));
 
 // change param value to control level of logging  ... ADD CODE
-app.use(logger('default'));  // 'default', 'short', 'tiny', 'dev'
+app.use(logger(config.env));  // 'default', 'short', 'tiny', 'dev'
 
 // use compression (gzip) to reduce size of HTTP responses
 app.use(compression());

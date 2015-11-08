@@ -1,3 +1,5 @@
 .idea/
 a1/.idea
 t1/.idea
+*/.idea
+*/node_modules

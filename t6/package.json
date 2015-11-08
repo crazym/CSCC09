@@ -1,0 +1,13 @@
+{
+	"name": "bleeps",
+	"description": "A micro-blogging app for bleeping (sharing) short messages",
+	"version": "1.2.3",
+	"engines": {
+		"node": "0.10.32",
+		"npm": "1.4.x"
+	},
+	"dependencies": {
+		"express": "4.7.x",
+		"ejs": "1.0.x"
+	}
+}

@@ -3,6 +3,7 @@ module.exports = {
     port: 41428, // replace with your port #
     dbuser: "zhangmao",
     dbpass: "tientienlol",
-    dbname: "zhangmao"
+    dbname: "zhangmao",
+    env: 'default' // 'default', 'short', 'tiny', 'dev'
     // TODO other fields ADD CODE
 };

@@ -7,9 +7,6 @@ var splat =  splat || {};
 // note View-name (Home) matches name of template file Home.html
 splat.Home = Backbone.View.extend({
 
-    initialize: function () {
-        this.render();
-    },
     // render the View
     render: function () {
 	// set the view element ($el) HTML content using its template

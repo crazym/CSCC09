@@ -57,28 +57,32 @@ splat.AppRouter = Backbone.Router.extend({
     /* add a new movie */
     add_movie: function(){
         splat.movies.fetch({
-                success: function(){
-
-                    var movie;
-                    movie = new splat.Movie();
-                    splat.edit = new splat.Details({
-                        model: movie,
-                        collection: splat.movies, tempModel: movie.toJSON()
-                    });
-                    $('#content').html(splat.edit.render().el);
-                }
+            success: function(coll, resp){
+                var movie;
+                movie = new splat.Movie();
+                splat.edit = new splat.Details({
+                    model: movie,
+                    collection: splat.movies, tempModel: movie.toJSON()
+                });
+                $('#content').html(splat.edit.render().el);
+            },
+            error: function(coll, resp){
+                $('#content').html('<h2>' + resp + '</h2>');
             }
-        );
+        });
     },
 
     /* edit an existing movie */
     edit_movie: function(id){
         splat.movies.fetch({
-            success: function(){
+            success: function(coll, resp){
                 var movie = splat.movies.get(id);
                 splat.edit = new splat.Details({model: movie,
                     collection: splat.movies, tempModel: movie.toJSON()});
                 $('#content').html(splat.edit.render().el);
+            },
+            error: function(coll, resp){
+                $('#content').html('<h2>' + resp + '</h2>');
             }
         });
     }

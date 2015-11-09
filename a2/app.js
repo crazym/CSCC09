@@ -68,10 +68,23 @@ app.use(methodOverride());
 // Heartbeat test of server API
 app.get('/', splat.api);
 
+// Retrieve all movies
+app.get('/movies', splat.getMovies);
 // Retrieve a single movie by its id attribute
 app.get('/movies/:id', splat.getMovie);
+// add a new movie
+app.post('/movies', splat.addMovie);
+// update an existing movie
+app.put('/movies/:id', splat.editMovie);
+// delete an movie
+app.delete('movies/:id', splat.deleteMovie);
+//// retrieve all reviews for a movie
+//app.get('/movies/:id/reviews', splat.getReviews);
+//// add a review for a specific movie
+//app.post('/movies/:id/reviews', splat.addReview);
+//// play video
+//app.get('/movies/:id/video', splat.playMovie);
 
-// TODO ADD CODE to support other routes listed on assignment handout
 
 // location of app's static content ... may need to ADD CODE
 app.use(express.static(__dirname + "/public"));
@@ -81,7 +94,7 @@ app.use(errorHandler({ dumpExceptions:true, showStack:true }));
 
 // Default-route middleware, in case none of above match
 app.use(function (req, res) {
-    // TODO ADD CODE
+    res.status(404).send('<h3>Sorry, specified route not found! :(</h3>');
 });
 
 

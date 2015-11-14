@@ -54,7 +54,7 @@ exports.api = function(req, res){
 // retrieve all Movie models on collection
 exports.getMovies = function(req, res){
     MovieModel.find(function(err, movies) {
-        if (!error) {
+        if (!err) {
             res.status(200).send(movies);
         } else {
             res.status(404).send("Sorry, no movies found " + error.message);

@@ -95,8 +95,8 @@ splat.Details = Backbone.View.extend({
 
         splat.utils.hideNotice();
         //var url = this.tempModel["_id"];
-        splat.movies.add(this.model); //add model to collection
         //save values in temporary movie model to the current movie model
+        splat.movies.add(this.model); //add model to collection
         this.model.save(this.tempModel, {
             wait:true,
             success: function(movie, response){

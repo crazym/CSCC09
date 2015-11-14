@@ -48,9 +48,24 @@ splat.AppRouter = Backbone.Router.extend({
     },
 
     movies_browse: function(){
-        if (!this.moviesView) {
-            this.moviesView = new splat.MoviesView();
-        }
+        // try to do it in Alan's way... no luck
+        // if (!this.moviesView) {
+        //     splat.movies.fetch({
+        //         silent:true,
+
+        //         success: function(coll, resp){
+        //             splat.moviesView = new splat.MoviesView({collection: splat.movies});
+        //         },
+        //         error: function(coll, resp){
+        //             //TODO
+        //         }
+        //     });
+        //     $('#content').html(splat.moviesView.render().el);
+        // };
+
+       // if (!this.moviesView) {
+        this.moviesView = new splat.MoviesView();
+        // }
         $('#content').html(this.moviesView.render().el);
     },
 
@@ -60,6 +75,7 @@ splat.AppRouter = Backbone.Router.extend({
             success: function(coll, resp){
                 var movie;
                 movie = new splat.Movie();
+                console.log(movie);
                 splat.edit = new splat.Details({
                     model: movie,
                     collection: splat.movies, tempModel: movie.toJSON()
@@ -67,7 +83,7 @@ splat.AppRouter = Backbone.Router.extend({
                 $('#content').html(splat.edit.render().el);
             },
             error: function(coll, resp){
-                $('#content').html('<h2>' + resp + '</h2>');
+                $('#content').html('<h2>' + resp.responseText + '</h2>');
             }
         });
     },
@@ -77,12 +93,14 @@ splat.AppRouter = Backbone.Router.extend({
         splat.movies.fetch({
             success: function(coll, resp){
                 var movie = splat.movies.get(id);
+                console.log("getting movie of id: " + id);
+                console.log(movie);
                 splat.edit = new splat.Details({model: movie,
                     collection: splat.movies, tempModel: movie.toJSON()});
                 $('#content').html(splat.edit.render().el);
             },
             error: function(coll, resp){
-                $('#content').html('<h2>' + resp + '</h2>');
+                $('#content').html('<h2>' + resp.responseText + '</h2>');
             }
         });
     }

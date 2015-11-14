@@ -80,8 +80,25 @@ exports.getMovie = function(req, res){
 
 // add a new movie model to the movies collection
 exports.addMovie = function(req, res){
-    // TODO not sure how to insert (is req.params a json object?
-    var movie = new MovieModel(req.params);
+    // TODO not sure how to insert (is req.body a json object?
+    var movie = new MovieModel(req.body);
+    // movie.save();
+    // res.send(200, movie);
+    // console.log(movie.id);
+    // var fileName = "/img/uploads/"+movie.id
+    // fs.writeFile(fileName, movie.poster, "base64", function(err, movie){
+    //     movie.poster = fileName;
+    //     movie.save(function(err, movie) {
+    //         if (err) {
+    //             res.status(500).send("Sorry, unable to retrieve movie at this time ("
+    //                 +err.message+ ")" );
+    //         } else if (!movie) {
+    //             res.status(404).send("Sorry, that movie doesn't exist; try reselecting from Browse view");
+    //         } else {
+    //             res.status(200).send(movie);
+    //         }
+    //     });
+    // })
     movie.save(function(err, movie) {
         if (err) {
             res.status(500).send("Sorry, unable to retrieve movie at this time ("
@@ -96,6 +113,7 @@ exports.addMovie = function(req, res){
 
 // update an individual movie model, using it's id as a DB key
 exports.editMovie = function(req, res){
+
     MovieModel.findById(req.params.id, function(findErr, movie){
         if(!findErr && movie){
             // update movie attributes from req.body

@@ -117,7 +117,7 @@ exports.editMovie = function(req, res){
     MovieModel.findById(req.params.id, function(findErr, movie){
         if(!findErr && movie){
             // update movie attributes from req.body
-            movie.save(function(saveErr, movieResp) {
+            movie.update({ _id: req.params.id }, req.body, {upsert: true}, function(saveErr, movieResp) {
                 if (!saveErr) {
                     // return model
                     res.status(200).send(movieResp);

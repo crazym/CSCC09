@@ -1,15 +1,7 @@
+"use strict";
+
 var splat =  splat || {};
 
-/* template for single movie model thumbnail */
+// "dummy" view just to give utils.loadTemplates a place to attach a template
 splat.MovieThumb = Backbone.View.extend({
-
-    initialize: function () {
-        this.render();
-    },
-
-    render: function () {
-        // create DOM content for MovieView
-        this.$el.html(this.template(this.model.toJSON()));
-        return this;    // support chaining
-    }
 });

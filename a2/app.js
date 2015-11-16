@@ -77,7 +77,7 @@ app.post('/movies', splat.addMovie);
 // update an existing movie
 app.put('/movies/:id', splat.editMovie);
 // delete an movie
-app.delete('movies/:id', splat.deleteMovie);
+app.delete('/movies/:id', splat.deleteMovie);
 //// retrieve all reviews for a movie
 //app.get('/movies/:id/reviews', splat.getReviews);
 //// add a review for a specific movie

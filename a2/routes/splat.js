@@ -11,7 +11,8 @@ var mongoose = require('mongoose'); // MongoDB integration
 
 // Connect to database, using credentials specified in your config module
 mongoose.connect('mongodb://' +config.dbuser+ ':' +config.dbpass+
-    '@10.15.2.164/' + config.dbname);
+    //'@10.15.2.164/' + config.dbname);
+    '@localhost/' + config.dbname);
 
 // Schemas
 var MovieSchema = new mongoose.Schema({
@@ -114,39 +115,54 @@ exports.addMovie = function(req, res){
 // update an individual movie model, using it's id as a DB key
 exports.editMovie = function(req, res){
 
-    MovieModel.findById(req.params.id, function(findErr, movie){
-        if(!findErr && movie){
-            // update movie attributes from req.body
-            movie.update({ _id: req.params.id }, req.body, {upsert: true}, function(saveErr, movieResp) {
-                if (!saveErr) {
-                    // return model
-                    res.status(200).send(movieResp);
-                } else {
-                    //TODO handle error
-                }
-            });
+    //MovieModel.findById(req.params.id, function(findErr, movie){
+    //    if(!findErr && movie){
+    //        // update movie attributes from req.body
+    var obj = req.body;
+    delete obj._id;
+    MovieModel.update({ _id: req.params.id }, req.body, {upsert: true}, function(saveErr, movieResp) {
+        if (!saveErr) {
+            // return model
+            res.status(200).send(movieResp);
         } else {
             //TODO handle error
         }
     });
+        //} else {
+        //    //TODO handle error
+        //}
+    //});
 };
 
 
 // delete an individual movie model from the collection, using it's id as a DB key
 exports.deleteMovie = function(req, res){
-    MovieModel.findById(req.params.id, function(findErr, movie){
-        if(!findErr && movie){
-            // update movie attributes from req.body
-            movie.remove(function(removeErr) {
-                if (!removeErr) {
-                    // TODO return what?
-                    res.status(200);
-                } else {
-                    //TODO handle error
-                }
-            });
+
+    MovieModel.findByIdAndRemove(req.params.id, function(findErr, movie) {
+        if (!findErr) {
+            res.status(200).send({"responseText": "movie successfully deleted"});
+        //} else if (!movie) {
+        //    res.send(404, "Sorry, unable to find the movie at this time");
         } else {
-            //TODO handle error
+            //res.send(200, "Okay");
+            res.send(500, "Sorry, unable to remove the movie ("
+                +findErr.message+ ")" );
         }
     });
+    //MovieModel.findById(req.params.id, function(findErr, movie){
+    //    if(!findErr && movie){
+    //        // update movie attributes from req.body
+    //        movie.remove(function(removeErr) {
+    //            if (!removeErr) {
+    //                // TODO return what?
+    //                res.status(200);
+    //            } else {
+    //                res.send(500, "Sorry, unable to remove the movie ("
+    //                            +removeErr.message+ ")" );
+    //            }
+    //        });
+    //    } else {
+    //        res.send(404, "Sorry, unable to find the movie at this time");
+    //    }
+    //});
 };

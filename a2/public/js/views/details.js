@@ -60,14 +60,16 @@ splat.Details = Backbone.View.extend({
         event.stopPropagation();
         //destroy current movie model and navigate to browse view on success
         this.model.destroy({
+            wait:true,
             success: function(model, response){
                 splat.utils.hideNotice();
-                splat.utils.showNotice('succ', "Movie deleted, redirsting to browsing page.");
-                splat.app.navigate("movies", {trigger: true, replace: true});
+                splat.utils.showNotice('succ', "Movie deleted, redirecting to browsing page.");
+                splat.app.navigate("/movies", {trigger: true, replace: true});
             },
             error: function(movie, response) {
                 splat.utils.hideNotice();
-                splat.utils.showNotice('warning', "Sorry, unable to delete this movie instance.");
+                //splat.utils.showNotice('warning', "Sorry, unable to delete this movie instance.");
+                splat.utils.showNotice('warning', response.responseText);
             }
         });
     },

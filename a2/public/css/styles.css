@@ -1,150 +1,247 @@
 body {
-    font-family: 'Open Sans', sans-serif;
-    padding-top:40px;
-    margin: 0px;
+    padding-top: 60px; /* shift container to bottom of heading */
     background-color: black;
-}
-
-header {
-    padding: 5px 0;
-    width: 100%;
-}
-
-main {
-    height: 100%;
-    margin: 0px;
-}
-
-footer {
-    text-align: right;
-    color: #C0C0C0;
-}
-
-/* Home Page */
-.home-menu {
-    font-size: 125%;
-}
-
-.home-hero {
-    background-image: url("/img/galaxy.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
     color: white;
-    font-family: "Verdana", Geneva, Helvetica, sans-serif;
-    font-size: 36px;
-    text-align: center;
-    text-shadow: 1px 1px black;
-    padding: 20%;
-    height: 100%;   
+}
+
+.brand {
+    font-family: 'Arvo';
+}
+
+a.home-btn img {
+    margin-right: 6px;
 }
 
 .home-btn {
-    height:50px;
-    border: 4px;
-    background-image: url("/img/icon.jpg");
-    background-size: 45px;
-    background-repeat: no-repeat;
-    text-align: center;
-    max-width: 200px;
-    opacity: 0.5;
-    font-family: Arvo;
-    width: 160px;
-    margin: 10px 6px 10px 6px;
-    padding-left: 45px;
-    font: 15px Arvo;
-    color: #080808;
-    opacity: 0.5;
+    opacity: .5;
 }
 
-
-/* Movies Page */
-.single-movie {
-    margin-left: 0px !important;
-    margin-right: 15px;
+.about {
+    margin-left: 1em;
 }
 
-.single-movie-thumbnail {
+a.plain:hover {
+    color: #FFF;
+    text-decoration: none;
+}
+
+.status-bar {
+    height: 60px;
+}
+
+.about-icon {
+    float: left;
+    margin-right: 12px;
+}
+
+.footer {
+    color: #999;
+    text-align: right;
+    padding-top: 0.5em;
+    padding-right: 1em;
+}
+
+.footer > p {
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+}
+
+.active {
+    color: blue;
+}
+
+.alert {
+    display: none;
+}
+
+.home-menu {
+	font-size: 125%;
+}
+
+h5 {
+    width: 100%;
+    white-space: nowrap;
+    margin-bottom: 4px;
+}
+
+.thumbnail {  /* box including image and description */
+    font-size: 80%;
     position: relative;
     border-width: 1px;
-    border-radius: 4px;
     border-color: #25383C;
+    background-color:#000000;
+    color: #FFFFFF !important;
+    border-radius: 4px;
+    padding: 0px;
     margin-right: 5px;
-    border-style: solid;
-    font-size: 80%;
+    font-family: ariel, sans-serif;
     text-align: right;
-    font-family: "Verdana", Geneva, Helvetica, sans-serif;
-    padding: 2px;
 }
 
-.help-inline{
-    color: #a94442; /*same color as the has-error class highlight*/
+.thumbnail .details {
+    padding: 0 1em;
 }
 
-.movie-img {
-    display: block;
-    max-height: 210px !important;
-    max-width: 280px !important;
-    margin-bottom: 10px;
-    text-align: center;
+img.thumbnail {
+    height: auto;
+    padding: 0;
+    margin-bottom: 5px;
 }
 
-.movie-edit-img {
-    margin: 0 auto;
-    display: block;
-    max-height: 300px;
+img.editImage {
+    padding: 0;
+}
+
+.well.editImage {
+    padding: 0;
+    margin: 0;
+}
+
+/* body text is white on black bgd but form-inputs are black on white bgd */
+input, textarea {
+    color: black;
+}
+
+textarea.col-sm-9 {
+    width: 75%;  /* override Bootstrap form-control class default 100%-width */
+}
+
+.help-block {
+    max-height: 1em;
+}
+
+/* override Bootstrap error color to make more visible */
+.has-error {
+    color: red;
+}
+
+.thumbnails li {
+    margin-left: 0px !important;
+    margin-right: 15px !important;
 }
 
 legend {
-    font-family: Andika;
+    font-family: 'Andika';
+    margin-bottom: 4px;
 }
 
-
-/* About page */
-.about {
-    padding-top: -30px;
+.home-hero {
+    font-family: "Andika";
+    font-size: 36;
     color: white;
-    font-size: 110%;
+    background-image: url('../img/imax.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin-top: -19px;
+    padding: 180px;
+    text-align : center;
+    text-shadow: 1px 1px 1px #000;
 }
 
-#aboutApp {
+@media only screen and ( max-width : 1000px ) {
+    .home-hero {
+        padding:100px;
+    }
+}
+
+@media only screen and ( max-width : 480px ) {
+    .home-hero {
+        padding:32px;
+    }
+}
+
+.editActions {
     text-align: center;
-    padding: 3%;
 }
 
-#app-pic {
-    max-width: 40%;
-    height: auto;
-    width: auto;
+.editActions .btn {
+    padding: .5em;
+    margin-bottom: .5em;
 }
 
-#aboutUs {
-    padding-left: 11%;
-    padding-right: 11%;
+.home-hero .btn {
+    font-family: "arvo";
+    margin: 10px 6px;
+    border-radius: 4px;
+    color: white;
+    background-color: #023659; 
+    white-space: normal;  
+    text-align: middle;
+    max-width: 200px;
 }
 
-#ererbi {
-    width: 33%;
-    display: inline-block;
-    text-align: center;
-    position: relative;
+.well h3 {
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 
-#dev-pic {
-    max-width: 100%;
-    height: auto;
-    width: auto;
+/* don't show the default browser file-input button */
+label input[type="file"] {
+    display:none;
 }
 
-.dev-bio {
-    width: 33%;
-    padding-top:7%;
+/* keep button from hitting edge of container */
+div.imageSelect {
+    width: 98%;  
 }
 
-#maomao {
+/* highlight image selection button on hover */
+.uploadLabel:hover {
+    background: #44D
+}
+
+label.fileInput {
     float:right;
+    vertical-align:middle;
+    padding:0 0.25em;
+    margin 0 .25em 0 0;
 }
 
-#manman {
-    float:left;
+p.buttonInstructions {
+    text-align:right;
+    width:70%;
+    position:relative;
+    vertical-align: middle;
+    right:.5em;
+    line-height: 120%;
 }
 
+input.fileImage {
+    margin: 0.2em .25em 0 0;
+    max-width:30%;
+}
+
+label.control-label {  /* bootstrap default is 5px which is too large */
+    margin-bottom: .1em;
+}
+
+div.has-error input {
+    border: solid red 1px;
+}
+
+.fileInput {
+    margin-top: -2px;
+}
+
+#movieform {
+    font-size:80%;
+    color: white;
+    clear:both;
+}
+
+#movieimg { 
+    width:100%;
+    text-align:center;
+    clear:both;
+}
+
+#movieimg .photoUpload {
+	color: white;
+}
+
+/* poster image drop element */
+#dropImage { margin-bottom: .5em; }
+
+#dropImage.active { border: solid red; }
+
+.thumbtitle { font-size: 120%; }

@@ -4,6 +4,6 @@ module.exports = {
     dbuser: "zhangmao",
     dbpass: "tientienlol",
     dbname: "zhangmao",
-    env: 'default' // 'default', 'short', 'tiny', 'dev'
+    env: 'short' // 'default', 'short', 'tiny', 'dev'
     // TODO other fields ADD CODE
 };

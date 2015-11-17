@@ -1,36 +1,34 @@
+/**
+  * @author Alan Rosselet
+  * @version 0.1
+  */
+
 // catch simple errors
 "use strict";
 
 // declare splat-app namespace if it doesn't already exist
 var splat =  splat || {};
 
-// note View-name (Home) matches name of template file Home.html
+/**
+  * @constructor HeaderView constructs the app header view
+  */
 splat.Header = Backbone.View.extend({
 
-    events: {
-        // trigger the selectMenuItem funtion with current event target on click of any menu item
-        "click .menu-item": function(e) {
-            this.selectMenuItem(e.currentTarget)}
+    render: function() {
+	// create DOM content for header
+        this.$el.html(this.template()); 
+        return this;
     },
 
-    initialize: function () {
-        this.render();
-    },
-
-    // render the View
-    render: function () {
-        // set the view element ($el) HTML content using its template
-        this.$el.html(this.template());
-        splat.utils.hideNotice();
-        return this;    // support method chaining
-    },
-
-    /* function triggered on click of menu item to set that menu item to active */
-    selectMenuItem: function(menuItem) {
-        //this.render();
-        // remove the active class on any current menu item
-        $('.menu-item').removeClass('active');
-        //var btn = document.getElementById(menuItem);
-        $(menuItem).addClass('active')
+    /**
+      * @param {String} menuItem  highlights as active the header menuItem
+      */
+    // Set Bootstrap "active" class to visually highlight the active header item
+    selectMenuItem: function (menuItem) {
+        $('.nav li').removeClass('active');
+        if (menuItem) {
+            $('.' + menuItem).addClass('active');
+        };
     }
+
 });

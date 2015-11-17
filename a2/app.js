@@ -87,7 +87,7 @@ app.delete('/movies/:id', splat.deleteMovie);
 
 
 // location of app's static content ... may need to ADD CODE
-app.use(express.static(__dirname + "/alan-public"));
+app.use(express.static(__dirname + "/public"));
 
 // return error details to client - use only during development
 app.use(errorHandler({ dumpExceptions:true, showStack:true }));

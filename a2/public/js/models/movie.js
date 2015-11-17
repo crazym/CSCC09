@@ -1,83 +1,127 @@
+'use strict';
+
 var splat =  splat || {};
 
 splat.Movie = Backbone.Model.extend({
-    // match localStorage (later server DB) use of _id, rather than id
-    idAttribute: "_id",
 
-    defaults: {
-        title: "",  // movie title
-        released: "",  // release year
-        director: "",  // movie's director
-        starring: [],  // array principal actors
-        rating: "",  // MPAA movie rating: G, PG, PG-13, R, NC-17, NR
-        duration: null,   // run-time in minutes
-        genre: [],   // genre terms, e.g. action, comedy, etc
-        synopsis: "",  // brief outline of the movie
-        freshTotal: 0.0,   // cumulative total of review fresh (1.0) votes
-        freshVotes: 0.0,   // number of review ratings
-        trailer: null,  // URL for trailer/movie-streaming
-        poster: "img/placeholder.png",  // movie-poster image URL
-        dated: new Date()  // date of movie posting
+    idAttribute: "_id",	// to match localStorage, which uses _id rather than id
+  
+    initialize: function() {
+
+        this.validators = {};
+	var titleDirector = /^([\ \,\.\?\-\'\*]*[a-zA-Z0-9]+[\ \,\.\?\-\'\*]*)+$/;
+	var date = /^(19[1-9]\d)|(200\d)|(201[0-6])$/;
+	var starringGenre = /^([\w\-\']+(\s[\w\-\']+)*)(,[\w\-\']+(\s[\w\-\']+)*)*$/;
+	var rating = /^(G)|(PG)|(PG-13)|(R)|(NC-17)|NR$/;
+	var duration = /^(\d)|(\d\d)|\d{3}$/;
+	var synopsis = /^\w+(\s+\w+)*$/;  // OK to add other punctuation with \s
+	var trailer = /^(https?:\/\/\w+(\.\w+)*(\/[\w\.#]+)*\/?)?$/;
+
+        this.validators.title = function (value) {
+            return (value && titleDirector.test(value)) ?
+		 {isValid: true}
+		 : {isValid: false,
+			message: 'Must be: one or more letters-digits-spaces'
+				+ ' with one or more of " ,.?-\'*" '};
+        };
+
+        this.validators.released = function (value) {
+            return (value && date.test(value)) ?
+		{isValid: true}
+		: {isValid: false,
+		    message: "Release Date must be from 1910 to 2016 inclusive"};
+        };
+
+        this.validators.director = function (value) {
+            return (value && titleDirector.test(value)) ?
+		 {isValid: true}
+		 : {isValid: false,
+			message: 'Must be: one or more letters-digits-spaces'
+				+ ' with one or more of " ,.?-\'*" '};
+        };
+
+        this.validators.rating = function (value) {
+            return (value && rating.test(value)) ?
+		{isValid: true}
+		: {isValid: false,
+		     message: "You must enter a valid MPAA rating, e.g. PG"};
+        };
+
+        this.validators.starring = function (value) {
+            return (value && starringGenre.test(value)) ?
+		{isValid: true}
+		: {isValid: false,
+		     message: "At least one star must be listed"};
+        };
+
+        this.validators.duration = function (value) {
+            return (value && duration.test(value)) ?
+		{isValid: true}
+		: {isValid: false,
+		     message: "Duration must be in the range 0 to 999"};
+        };
+
+        this.validators.genre = function (value) {
+            return (value && starringGenre.test(value)) ?
+		{isValid: true}
+		: {isValid: false,
+		     message: "You must enter at least one genre"};
+        };
+
+        this.validators.synopsis = function (value) {
+            return (value && synopsis.test(value)) ?
+		{isValid: true}
+		: {isValid: false,
+		    message: "Synopsis must consist of a non-empty word list"};
+        };
+
+        this.validators.trailer = function (value) {
+            return (value === "" || trailer.test(value)) ?
+		{isValid: true}
+		: {isValid: false,
+		    message: "Trailer must be empty or a valid URL"};
+        };
+
     },
 
-    // validators, see errMsg for specification
-    validators:{
-        "title": function(value){
-            var regex = /([a-zA-Z0-9\,\.\!\?\-\'\*]+\s?)+/;
-            return (value && regex.test(value)) ? {isOK: true} : {isOK: false,
-                errMsg: "Only 1 or more letters and/or digits with spaces and special characters are allowed"};
-        },
+    validateItem: function (key) {
+        return (this.validators[key]) ?
+		this.validators[key](this.get(key))
+		: {isValid: true};
+    },
 
-        "released": function(value){
-            var regex = /^([0-9]{4})$/;
-            return (value && regex.test(value) && (value >= 1910 && value<= 2016)) ? {isOK: true} : {isOK: false,
-                errMsg: "Only 4 digits allowed, the released year should between 1910 - 2016"};
-        },
+    validateAll: function () {
 
-        "director": function(value){
-            var regex = /([a-zA-Z0-9\,\.\!\?\-\'\*]+\s?)+/;
-            return (value && regex.test(value)) ? {isOK: true} : {isOK: false,
-                errMsg: "Director must consist of one or more letter characters optionally with digit and space characters and special characters: ',', '.', '!', '?', '-', ''', '*'."};
-        },
+        var messages = {};
 
-        "starring": function(value){
-            var regex = /((([a-zA-Z0-9\-\']+\s?)+,?)+\s?)+/;
-            return (value && regex.test(value)) ? {isOK: true} : {isOK: false,
-                errMsg: "Starring must consist of one-or-more comma-separated sequences of whitespace-separated words, each such word which may optionally include special characters: '-', '''"};
-        },
-
-        "genre": function(value){
-            var regex = /((([a-zA-Z0-9\-\']+\s?)+,?)+\s?)+/;
-            return (value && regex.test(value)) ? {isOK: true} : {isOK: false,
-                errMsg: "Genre must consist of one-or-more comma-separated sequences of whitespace-separated words, each such word which may optionally include special characters: '-', '''"};
-        },
-
-        "rating": function(value){
-            var rate = ['G', 'PG', 'PG-13', 'R', 'NC-17', 'NR'];
-            return (value && ($.inArray(value, rate) > -1)) ? {isOK: true} : {isOK: false,
-                errMsg: "Only 1 of G, PG, PG-13, R, NC-17, NR"};
-        },
-
-        "duration": function(value){
-            var regex = /^([0-9]{1,3})$/;
-            return (value && regex.test(value) && (value >= 0 && value<= 999)) ? {isOK: true} : {isOK: false,
-                errMsg: "Duration must consist of an integer in the range 0-999"};
-        },
-
-        "synopsis": function(value){
-            var regex = /^(\w+\s?)+/;
-            return (value && regex.test(value)) ? {isOK: true} : {isOK: false,
-                errMsg: "Synopsis must consist of a non-empty word list"};
-        },
-
-        "trailer": function(value){
-            var httpRegex = /^(http)(s?)\:\/\//
-            var domain = /([a-zA-Z0-9\-\._]+(\.[a-zA-Z0-9\-\._]+)+)/
-            var content = /(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*$)/
-            var regex = new RegExp(httpRegex.source+domain.source+content.source);
-            return (value && regex.test(value)) ? {isOK: true} : {isOK: false,
-                errMsg: "Only empty string or a properly-formatted url are allowed"};
+        for (var key in this.validators) {
+            if (this.validators.hasOwnProperty(key)) {
+                var check = this.validators[key](this.get(key));
+                if (check.isValid === false) {
+                    messages[key] = check.message;
+                }
+            }
         }
-    }
+
+        return _.size(messages) > 0 ? {isValid: false, messages: messages}
+					: {isValid: true};
+
+    },
+
+    defaults: {
+      title: "",
+      released: null,
+      director: "",
+      starring: [],
+      rating: "",
+      duration: null,
+      genre: "",
+      synopsis: "",
+      freshTotal: 0.0,
+      freshVotes: 0.0,
+      trailer: "",
+      poster: "img/placeholder.png",
+      dated: new Date()
+   }
 
 });

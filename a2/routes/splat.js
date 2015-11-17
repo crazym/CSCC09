@@ -100,10 +100,35 @@ exports.addMovie = function(req, res){
     //         }
     //     });
     // })
-    movie.save(function(err, movie) {
+    //console.log(movie.id);
+    //if (movie.poster) {
+    //    var pathURL = "/img/uploads/" + movie.id + ".png";
+    //    var fileData = movie.poster.split(',')[1];
+    //}
+    //fs.writeFile(pathURL, fileData, "base64", function(err) {
+    //    //movie.set('poster', pathURL);
+    //
+    //    if (!err) {
+    //        movie.poster = pathURL;
+    //        movie.save(function (err, movie) {
+    //            if (err) {
+    //                res.status(500).send("Sorry, unable to retrieve movie at this time ("
+    //                    + err.message + ")");
+    //            } else if (!movie) {
+    //                res.status(404).send("Sorry, that movie doesn't exist; try reselecting from Browse view");
+    //            } else {
+    //                res.status(200).send(movie);
+    //            }
+    //        });
+    //    } else {
+    //        res.status(500).send("Sorry, (" + err.message + " )");
+    //    }
+    //});
+
+    movie.save(function (err, movie) {
         if (err) {
             res.status(500).send("Sorry, unable to retrieve movie at this time ("
-                +err.message+ ")" );
+                + err.message + ")");
         } else if (!movie) {
             res.status(404).send("Sorry, that movie doesn't exist; try reselecting from Browse view");
         } else {

@@ -76,8 +76,9 @@ splat.MovieForm = Backbone.View.extend({
             success: function(model, response) {
                 // Set the URL, to reflect the assigned movie-id for new movies
                 if (newMovie) {
-                        splat.app.navigate('movies/' + model._id, {replace:true});
-                        model.reviews.url = '/movies/' + model._id + '/reviews';
+                        //changed from ._id in A1 to .id in A2 for JSON instead of model
+                        splat.app.navigate('/movies/' + model.id, {replace:true});
+                        //model.reviews.url = 'movies/' + model.id + '/reviews';
                 };
                 splat.utils.showAlert('Success!', 'Movie saved', 'alert-success');
             },

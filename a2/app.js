@@ -78,11 +78,11 @@ app.post('/movies', splat.addMovie);
 app.put('/movies/:id', splat.editMovie);
 // delete an movie
 app.delete('/movies/:id', splat.deleteMovie);
-//// retrieve all reviews for a movie
-//app.get('/movies/:id/reviews', splat.getReviews);
-//// add a review for a specific movie
-//app.post('/movies/:id/reviews', splat.addReview);
-//// play video
+// retrieve all reviews for a movie
+app.get('/movies/:id/reviews', splat.getReviews);
+// add a review for a specific movie
+app.post('/movies/:id/reviews', splat.addReview);
+// play video
 //app.get('/movies/:id/video', splat.playMovie);
 
 

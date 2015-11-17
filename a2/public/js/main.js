@@ -21,8 +21,8 @@ splat.AppRouter = Backbone.Router.extend({
 
     initialize: function() {
         this.movies = new splat.Movies();  // Movies collection
-	splat.moviesView = new splat.MoviesView({collection:this.movies});
-	// create a jQuery promise to gate access to the fetched collection
+	    splat.moviesView = new splat.MoviesView({collection:this.movies});
+	    // create a jQuery promise to gate access to the fetched collection
         this.moviesLoaded = this.movies.fetch();  // used by add()
         this.headerView = new splat.Header();
         $('.header').html(this.headerView.render().el);
@@ -33,7 +33,7 @@ splat.AppRouter = Backbone.Router.extend({
             this.homeView = new splat.Home();
         };
         splat.app.showView('#content', this.homeView);
-	// hilite "Splat!" in header
+	    // hilite "Splat!" in header
         this.headerView.selectMenuItem('home-menu'); 
     },
 
@@ -48,7 +48,10 @@ splat.AppRouter = Backbone.Router.extend({
 
     browse: function() {
         var self = this;
-            this.moviesBrowse = this.movies.fetch();
+        //console.log("browsing");
+        //console.log(this.moviesBrowse);
+        // won't load the view if no movies fetched...
+        this.moviesBrowse = this.movies.fetch();
         this.moviesBrowse.done(function() {
             splat.moviesView = new splat.MoviesView({collection:self.movies});
                 splat.app.showView('#content', splat.moviesView);
@@ -77,6 +80,7 @@ splat.AppRouter = Backbone.Router.extend({
     },
 
     movieView: function(id) {
+        // movies already loaded
         var movieModel = this.movies.get(id);  // get model from collection
         // display error if invalid id is provided
         if (!movieModel) {
@@ -88,13 +92,27 @@ splat.AppRouter = Backbone.Router.extend({
     },
 
     addReview: function(id) {
-        var movieModel = this.movies.get(id);
-        if (!movieModel) {
-            splat.utils.showAlert('Error', "can't find this movie (perhaps deleted?)", 'alert-danger');
-        } else {
-            var reviewsView = new splat.ReviewsView({collection:self.movies, model: movieModel});
-            splat.app.showView('#content', reviewsView);
-        }    },
+        var self = this;
+        this.moviesLoaded.done(function() {
+            var movieModel = self.movies.get(id);  // get model from collection
+            if (!movieModel) {
+                splat.utils.showAlert('Error', "can't find this movie (perhaps deleted?) [" + id + "]", 'alert-danger');
+            } else {
+                var reviewsView = new splat.ReviewsView({model: movieModel});
+                //console.log("reviews for movieModel before loading is ");
+                //console.log(movieModel.reviews);
+                //this.reviewsLoaded = movieModel.reviews.fetch();
+                //this.reviewsLoaded.done(function() {
+                //    console.log("after loading reviews are ");
+                //    console.log(movieModel.reviews);
+                //    var reviewsView = new splat.ReviewsView({collection: movieModel.reviews});
+                //    splat.app.showView('#content', reviewsView);
+                //});
+                //var reviewsView = new splat.ReviewsView({collection: {}});
+                splat.app.showView('#content', reviewsView);
+            }
+        });
+    },
 
     /* showView invokes close() on the currentView before replacing it
        with the new view, in order to avoid memory leaks and ghost views.
@@ -128,7 +146,7 @@ Backbone.View.prototype.close = function () {
 };
 
 splat.utils.loadTemplates(['Home', 'Header', 'About', 'MovieThumb',
-    			'MovieForm', 'MovieImg', 'Details' ] , function() {
+    			'MovieForm', 'MovieImg', 'Details', 'ReviewThumb', 'Reviewer', 'ReviewsView' ] , function() {
     splat.app = new splat.AppRouter();
     Backbone.history.start();
 });

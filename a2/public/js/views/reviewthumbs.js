@@ -20,6 +20,7 @@ splat.ReviewThumbs = Backbone.View.extend({
         // clear current thumbs to avoid duplicates
         $('#review_thumbs').html("");
 
+        console.log("current reviews has size " + this.collection.size());
         // render Reviews subview
         var movieThumbView = new splat.ReviewThumb();
         var html = this.reviewsTemplate({

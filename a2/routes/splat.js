@@ -29,17 +29,28 @@ var MovieSchema = new mongoose.Schema({
     freshVotes: {type: Number, required: true},
     trailer: {type: String},
     poster: {type: String, required: true},
-    dated: {type: Date, required: true}
+    dated: {type: Date, required: true},
+    //reviews: {type: }
+});
+
+var ReviewSchema = new mongoose.Schema({
+    freshness: { type: Number, required: true },   // fresh review value 1.0, rotten value 0.0
+    reviewText: { type: String, required: true },   // review comments
+    reviewName: { type: String, required: true },  // name of reviewer
+    reviewAffil: { type: String, required: true },  // affiliation of reviewer
+    movieId: { type: String, required: true }  // idref: id of reviewed movie
 });
 
 // Constraints
 // each title:director pair must be unique; duplicates are dropped
-MovieSchema.index({title:1,director:1}, { "unique": true });  // ???? ADD CODE
+MovieSchema.index({title:1,director:1}, { "unique": true });
+ReviewSchema.index({reviewName:1,movieId:1}, { "unique": true });  // ???? ADD CODE
 
 // Models
 // MovieModel is a Model-constructor function that can
 // be used to create instances of Movie model
 var MovieModel = mongoose.model('Movie', MovieSchema);
+var ReviewModel = mongoose.model('Review', ReviewSchema);
 
 
 // Implemention of splat API handlers:
@@ -172,3 +183,36 @@ exports.deleteMovie = function(req, res){
     });
 
 };
+
+
+// retrieve all Movie models on collection
+exports.getReviews = function(req, res){
+    console.log("getting Reviews for id: " + req.params.id)
+    ReviewModel.find({movieId: req.params.id}, function(err, reviews) {
+        console.log("reviews for id: " + req.params);
+        console.log(reviews);
+        if (!err) {
+            res.status(200).send(reviews);
+        } else {
+            res.status(404).send("Sorry, no reviews found " + error.message);
+        }
+    });
+};
+
+exports.addReview = function(req, res){
+    console.log("req for addMovie is: ")
+    console.log(req.body);
+    var review = new ReviewModel(req.body);
+
+    review.save(function (err, review) {
+        if (err) {
+            res.status(500).send("Sorry, unable to retrieve movie at this time ("
+                + err.message + ")");
+        } else if (!review) {
+            res.status(404).send("Sorry, that movie doesn't exist; try reselecting from Browse view");
+        } else {
+            res.status(200).send(review);
+        }
+    });
+};
+

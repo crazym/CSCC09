@@ -9,13 +9,13 @@ splat.Movie = Backbone.Model.extend({
     initialize: function() {
 
         this.validators = {};
-	var titleDirector = /^([\ \,\.\?\-\'\*]*[a-zA-Z0-9]+[\ \,\.\?\-\'\*]*)+$/;
-	var date = /^(19[1-9]\d)|(200\d)|(201[0-6])$/;
-	var starringGenre = /^([\w\-\']+(\s[\w\-\']+)*)(,[\w\-\']+(\s[\w\-\']+)*)*$/;
-	var rating = /^(G)|(PG)|(PG-13)|(R)|(NC-17)|NR$/;
-	var duration = /^(\d)|(\d\d)|\d{3}$/;
-	var synopsis = /^\w+(\s+\w+)*$/;  // OK to add other punctuation with \s
-	var trailer = /^(https?:\/\/\w+(\.\w+)*(\/[\w\.#]+)*\/?)?$/;
+        var titleDirector = /^([\ \,\.\?\-\'\*]*[a-zA-Z0-9]+[\ \,\.\?\-\'\*]*)+$/;
+        var date = /^(19[1-9]\d)|(200\d)|(201[0-6])$/;
+        var starringGenre = /^([\w\-\']+(\s[\w\-\']+)*)(,[\w\-\']+(\s[\w\-\']+)*)*$/;
+        var rating = /^(G)|(PG)|(PG-13)|(R)|(NC-17)|NR$/;
+        var duration = /^(\d)|(\d\d)|\d{3}$/;
+        var synopsis = /^\w+(\s+\w+)*$/;  // OK to add other punctuation with \s
+        var trailer = /^(https?:\/\/\w+(\.\w+)*(\/[\w\.#]+)*\/?)?$/;
 
         this.validators.title = function (value) {
             return (value && titleDirector.test(value)) ?

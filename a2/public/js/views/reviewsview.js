@@ -19,13 +19,27 @@ splat.ReviewsView = Backbone.View.extend({
         // can all be chained, as in this.renderX().renderY().renderZ() ...
 
         var self = this;
-        this.$el.html(this.template(this.model.toJSON()));
+        this.$el.html(this.template());
 
-        // render MovieForm subview
-        this.formView = new splat.Reviewer({model: this.model});
-        this.$('#reviewer').append(this.formView.render().el);
+        var reviews = this.model.reviews;
+        var newReview = new splat.Review();
+        newReview.set("movieId", this.model.id);
+        // render Reviewer subview
+        //console.log("new review is :")
+        //console.log(newReview);
+        if (!reviews){
+            reviews = new splat.Reviews();
+        }
+        newReview.collection = reviews;
+        console.log("review passed into Reviewer is ");
+        console.log(newReview);
+        this.reviewerView = new splat.Reviewer({collection: this.collection, model: newReview});
+        this.$('#reviewer').append(this.reviewerView.render().el);
 
-        this.renderReviews();
+
+        //console.log("reviews passed in reviewsView is ");
+        //console.log(this.collection);
+        //this.renderReviews(this.model);
 
         return this;
     },
@@ -57,12 +71,25 @@ splat.ReviewsView = Backbone.View.extend({
         "<% }); %>",
     ].join('')),
 
-    renderReviews: function () {
+    renderReviews: function (movieModel) {
 
         if (this.thumbsView) {
             this.thumbsView.remove();
         }
-        this.thumbsView = new splat.Reviewer({model: this.model});
+
+
+        console.log("reviews for movieModel before loading is ");
+        console.log(movieModel.reviews);
+        this.reviewsLoaded = movieModel.reviews.fetch();
+        this.reviewsLoaded.done(function() {
+            console.log("after loading reviews are ");
+            console.log(movieModel.reviews);
+            var reviewsView = new splat.ReviewsView({collection: movieModel.reviews});
+            splat.app.showView('#content', reviewsView);
+        });
+        //console.log("reviews passed in renderReviews is ");
+        //console.log(reviews);
+        this.thumbsView = new splat.ReviewThumbs({collection: reviews});
         this.$('#review_thumbs').append(this.thumbsView.render().el);
 
         //// clear current thumbs to avoid duplicates
@@ -80,7 +107,7 @@ splat.ReviewsView = Backbone.View.extend({
 
     // remove subviews on close of ReviewsView view
     onClose: function() {
-        if (this.formView) { this.formView.remove(); }
+        if (this.reviewerView) { this.reviewerView.remove(); }
         if (this.thumbsView) { this.thumbsView.remove(); }
     }
 

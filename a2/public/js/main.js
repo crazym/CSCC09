@@ -6,11 +6,13 @@ splat.AppRouter = Backbone.Router.extend({
 
     routes: {
         "": "home",
-	"about": "about",
+	    "about": "about",
         "movies": "browse",
-	"movies/add": "addMovie",
+	    "movies/add": "addMovie",
         "movies/:id": "editMovie",
-	"*default": "defaultRoute"
+        "movies/:id/reviews": "addReview",
+        "*default": "defaultRoute"
+
     },
 
     defaultRoute: function() {
@@ -45,32 +47,32 @@ splat.AppRouter = Backbone.Router.extend({
     },
 
     browse: function() {
-	var self = this;
-        this.moviesBrowse = this.movies.fetch();
-	this.moviesBrowse.done(function() {
-	    splat.moviesView = new splat.MoviesView({collection:self.movies});
-            splat.app.showView('#content', splat.moviesView);
-	});
+        var self = this;
+            this.moviesBrowse = this.movies.fetch();
+        this.moviesBrowse.done(function() {
+            splat.moviesView = new splat.MoviesView({collection:self.movies});
+                splat.app.showView('#content', splat.moviesView);
+        });
         this.headerView.selectMenuItem('browse-menu'); 
     },
 
     editMovie: function(id) {
-	var self = this;
-	this.moviesLoaded.done(function() {
-	    self.movieView(id);
-        });
-	// no menu item active at this point
-	this.headerView.selectMenuItem();
+        var self = this;
+        this.moviesLoaded.done(function() {
+            self.movieView(id);
+            });
+        // no menu item active at this point
+        this.headerView.selectMenuItem();
     },
 
     addMovie: function() {
         var movie = new splat.Movie();  // create new Movie
-	// Details expects movie to have a collection
-	movie.collection = this.movies;
-	this.moviesLoaded.done(function() {
-        var detailsView = new splat.Details({model: movie});
-            splat.app.showView('#content', detailsView);
-	});
+        // Details expects movie to have a collection
+        movie.collection = this.movies;
+        this.moviesLoaded.done(function() {
+            var detailsView = new splat.Details({model: movie});
+                splat.app.showView('#content', detailsView);
+        });
         this.headerView.selectMenuItem('add-menu');  // Add menu item active
     },
 
@@ -82,8 +84,17 @@ splat.AppRouter = Backbone.Router.extend({
         } else {
              var detailsView = new splat.Details({model: movieModel});
              splat.app.showView('#content', detailsView);
-	}
+	    }
     },
+
+    addReview: function(id) {
+        var movieModel = this.movies.get(id);
+        if (!movieModel) {
+            splat.utils.showAlert('Error', "can't find this movie (perhaps deleted?)", 'alert-danger');
+        } else {
+            var reviewsView = new splat.ReviewsView({collection:self.movies, model: movieModel});
+            splat.app.showView('#content', reviewsView);
+        }    },
 
     /* showView invokes close() on the currentView before replacing it
        with the new view, in order to avoid memory leaks and ghost views.

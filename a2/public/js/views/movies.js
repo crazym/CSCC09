@@ -10,6 +10,11 @@ splat.MoviesView = Backbone.View.extend({
         "<% }); %>",
     ].join('')),
 
+
+    initialize: function (options) {
+        this.listenTo(Backbone, 'orderevent', this.render);
+    },
+
     // When the MovieView template has loaded, take the template read in
     // (markup) and turn that into a movieTemplate function, then apply the
     // moviesTemplate function to the movies collection with the movieTemplate.
@@ -22,7 +27,10 @@ splat.MoviesView = Backbone.View.extend({
             });
         $(this.el).append(html);
 
-        // support chaining
+
+        this.$el.html(html);
+        //this.swatchImg();
+	// support chaining
         return this;
     },
 

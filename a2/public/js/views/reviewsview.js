@@ -21,25 +21,37 @@ splat.ReviewsView = Backbone.View.extend({
         var self = this;
         this.$el.html(this.template());
 
-        var reviews = this.model.reviews;
+        //var reviews = this.model.reviews;
         var newReview = new splat.Review();
         newReview.set("movieId", this.model.id);
         // render Reviewer subview
         //console.log("new review is :")
         //console.log(newReview);
-        if (!reviews){
-            reviews = new splat.Reviews();
-        }
-        newReview.collection = reviews;
-        console.log("review passed into Reviewer is ");
-        console.log(newReview);
-        this.reviewerView = new splat.Reviewer({collection: this.collection, model: newReview});
-        this.$('#reviewer').append(this.reviewerView.render().el);
+        //if (!reviews){
+        //    reviews = new splat.Reviews();
+        //}
+
+        var reviews = new splat.Reviews();
+        reviews.url = '/movies/' + this.model.id + '/reviews';
+
+        var reviewsLoaded = reviews.fetch();
+
+        reviewsLoaded.done(function(){
+            console.log("reviewsLoaded Done");
+            console.log(reviews);
+
+            newReview.collection = reviews;
+            console.log("review passed into Reviewer is ");
+            console.log(newReview);
+            self.reviewerView = new splat.Reviewer({collection: this.collection, model: newReview});
+            self.$('#reviewer').append(self.reviewerView.render().el);
 
 
-        //console.log("reviews passed in reviewsView is ");
-        //console.log(this.collection);
-        //this.renderReviews(this.model);
+            console.log("reviews passed in reviewsView is ");
+            console.log(this.collection);
+            self.renderReviews(reviews);
+
+        });
 
         return this;
     },
@@ -71,22 +83,21 @@ splat.ReviewsView = Backbone.View.extend({
         "<% }); %>",
     ].join('')),
 
-    renderReviews: function (movieModel) {
+    renderReviews: function (reviews) {
 
         if (this.thumbsView) {
             this.thumbsView.remove();
         }
 
-
-        console.log("reviews for movieModel before loading is ");
-        console.log(movieModel.reviews);
-        this.reviewsLoaded = movieModel.reviews.fetch();
-        this.reviewsLoaded.done(function() {
-            console.log("after loading reviews are ");
-            console.log(movieModel.reviews);
-            var reviewsView = new splat.ReviewsView({collection: movieModel.reviews});
-            splat.app.showView('#content', reviewsView);
-        });
+        //console.log("reviews for movieModel before loading is ");
+        //console.log(movieModel.reviews);
+        //this.reviewsLoaded = movieModel.reviews.fetch();
+        //this.reviewsLoaded.done(function() {
+        //    console.log("after loading reviews are ");
+        //    console.log(movieModel.reviews);
+        //    var reviewsView = new splat.ReviewsView({collection: movieModel.reviews});
+        //    splat.app.showView('#content', reviewsView);
+        //});
         //console.log("reviews passed in renderReviews is ");
         //console.log(reviews);
         this.thumbsView = new splat.ReviewThumbs({collection: reviews});

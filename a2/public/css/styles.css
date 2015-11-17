@@ -25,6 +25,16 @@ a.plain:hover {
     text-decoration: none;
 }
 
+.dropdown-menu {
+    padding: 15px 15px 0px;
+
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0;
+}
+
 .freshInfo {
     position: absolute;
     top: 75%;

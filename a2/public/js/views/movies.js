@@ -10,26 +10,32 @@ splat.MoviesView = Backbone.View.extend({
         "<% }); %>",
     ].join('')),
 
-
     initialize: function (options) {
         this.listenTo(Backbone, 'orderevent', this.render);
     },
+
 
     // When the MovieView template has loaded, take the template read in
     // (markup) and turn that into a movieTemplate function, then apply the
     // moviesTemplate function to the movies collection with the movieTemplate.
     // Append the resulting HTML to the MoviesView el (DOM element).
     render: function() {
+        // comparator function on collection is the basis for comparing movie
+        // models
+        this.collection.comparator = function(movie) {
+            return movie.get(splat.order);
+        };
+        // sort collection before rendering it - implicitly uses comparator
+        this.collection.sort();
+
         var movieThumbView = new splat.MovieThumb();
         var html = this.moviesTemplate({
             movies: this.collection,
             movieTemplate: movieThumbView.template
             });
-        $(this.el).append(html);
 
 
         this.$el.html(html);
-        //this.swatchImg();
 	// support chaining
         return this;
     },

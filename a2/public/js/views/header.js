@@ -20,6 +20,17 @@ splat.Header = Backbone.View.extend({
         return this;
     },
 
+    events: {
+        "change input[type='radio']" : "sortOrder"  // ADD CODE to select orderInput-element
+    },
+
+    sortOrder: function(event) {
+        event.stopPropagation();
+        splat.order = event.target.value;  // set app-level order field
+        Backbone.trigger('orderevent', event);  // trigger event for other views
+        $('#orderForm').removeClass('open');  // close the dropdown menu
+    },
+
     /**
       * @param {String} menuItem  highlights as active the header menuItem
       */

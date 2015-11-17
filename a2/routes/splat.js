@@ -81,82 +81,80 @@ exports.getMovie = function(req, res){
 
 // add a new movie model to the movies collection
 exports.addMovie = function(req, res){
-    // TODO not sure how to insert (is req.body a json object?
     var movie = new MovieModel(req.body);
-    // movie.save();
-    // res.send(200, movie);
-    // console.log(movie.id);
-    // var fileName = "/img/uploads/"+movie.id
-    // fs.writeFile(fileName, movie.poster, "base64", function(err, movie){
-    //     movie.poster = fileName;
-    //     movie.save(function(err, movie) {
-    //         if (err) {
-    //             res.status(500).send("Sorry, unable to retrieve movie at this time ("
-    //                 +err.message+ ")" );
-    //         } else if (!movie) {
-    //             res.status(404).send("Sorry, that movie doesn't exist; try reselecting from Browse view");
-    //         } else {
-    //             res.status(200).send(movie);
-    //         }
-    //     });
-    // })
-    //console.log(movie.id);
-    //if (movie.poster) {
-    //    var pathURL = "/img/uploads/" + movie.id + ".png";
-    //    var fileData = movie.poster.split(',')[1];
-    //}
-    //fs.writeFile(pathURL, fileData, "base64", function(err) {
-    //    //movie.set('poster', pathURL);
-    //
-    //    if (!err) {
-    //        movie.poster = pathURL;
-    //        movie.save(function (err, movie) {
-    //            if (err) {
-    //                res.status(500).send("Sorry, unable to retrieve movie at this time ("
-    //                    + err.message + ")");
-    //            } else if (!movie) {
-    //                res.status(404).send("Sorry, that movie doesn't exist; try reselecting from Browse view");
-    //            } else {
-    //                res.status(200).send(movie);
-    //            }
-    //        });
-    //    } else {
-    //        res.status(500).send("Sorry, (" + err.message + " )");
-    //    }
-    //});
 
-    movie.save(function (err, movie) {
-        if (err) {
-            res.status(500).send("Sorry, unable to retrieve movie at this time ("
-                + err.message + ")");
-        } else if (!movie) {
-            res.status(404).send("Sorry, that movie doesn't exist; try reselecting from Browse view");
-        } else {
-            res.status(200).send(movie);
-        }
-    });
+    if (movie.poster.indexOf("data:")==0) {
+        // pathURL needs to be absolute while posterURL are relevant
+        var pathURL = __dirname + "/../public/img/uploads/" + movie.id + ".png";
+        var posterPath = "/img/uploads/" + movie.id + ".png";
+        var fileData = movie.poster.split(',')[1];
+
+        fs.writeFile(pathURL, fileData, "base64", function(err) {
+            if (!err) {
+                movie.poster = posterPath;
+                movie.save(function (err, movie) {
+                    if (err) {
+                        res.status(500).send("Sorry, unable to retrieve movie at this time ("
+                            + err.message + ")");
+                    } else if (!movie) {
+                        res.status(404).send("Sorry, that movie doesn't exist; try reselecting from Browse view");
+                    } else {
+                        res.status(200).send(movie);
+                    }
+                });
+            } else {
+                res.status(500).send("Sorry, (" + err.message + " )");
+            }
+        });
+    } else {
+        movie.save(function (err, movie) {
+            if (err) {
+                res.status(500).send("Sorry, unable to retrieve movie at this time ("
+                    + err.message + ")");
+            } else if (!movie) {
+                res.status(404).send("Sorry, that movie doesn't exist; try reselecting from Browse view");
+            } else {
+                res.status(200).send(movie);
+            }
+        });
+    }
 };
 
 // update an individual movie model, using it's id as a DB key
 exports.editMovie = function(req, res){
-
-    //MovieModel.findById(req.params.id, function(findErr, movie){
-    //    if(!findErr && movie){
-    //        // update movie attributes from req.body
     var obj = req.body;
     delete obj._id;
-    MovieModel.update({ _id: req.params.id }, req.body, {upsert: true}, function(saveErr, movieResp) {
-        if (!saveErr) {
-            // return model
-            res.status(200).send(movieResp);
-        } else {
-            //TODO handle error
-        }
-    });
-        //} else {
-        //    //TODO handle error
-        //}
-    //});
+
+    if (obj.poster.indexOf("data:")==0) {
+        var pathURL = __dirname + "/../public/img/uploads/" + req.params.id + ".png";
+        var posterPath = "/img/uploads/" + req.params.id + ".png";
+        var fileData = obj.poster.split(',')[1];
+
+        fs.writeFile(pathURL, fileData, "base64", function(err){
+            if (!err) {
+                obj.poster = posterPath;
+                MovieModel.update({_id: req.params.id}, obj, {upsert: true}, function (saveErr, movieResp) {
+                    if (!saveErr) {
+                        // return model
+                        res.status(200).send(movieResp);
+                    } else {
+                        //TODO handle error
+                    }
+                });
+            } else {
+                res.status(500).send(err)
+            }
+        });
+    } else{
+        MovieModel.update({_id: req.params.id}, obj, {upsert: true}, function (saveErr, movieResp) {
+            if (!saveErr) {
+                // return model
+                res.status(200).send(movieResp);
+            } else {
+                //TODO handle error
+            }
+        });
+    };
 };
 
 
@@ -165,29 +163,12 @@ exports.deleteMovie = function(req, res){
 
     MovieModel.findByIdAndRemove(req.params.id, function(findErr, movie) {
         if (!findErr) {
+            //need to send json object on 200, o.w. trigger "error" handler
             res.status(200).send({"responseText": "movie successfully deleted"});
-        //} else if (!movie) {
-        //    res.send(404, "Sorry, unable to find the movie at this time");
         } else {
-            //res.send(200, "Okay");
             res.send(500, "Sorry, unable to remove the movie ("
                 +findErr.message+ ")" );
         }
     });
-    //MovieModel.findById(req.params.id, function(findErr, movie){
-    //    if(!findErr && movie){
-    //        // update movie attributes from req.body
-    //        movie.remove(function(removeErr) {
-    //            if (!removeErr) {
-    //                // TODO return what?
-    //                res.status(200);
-    //            } else {
-    //                res.send(500, "Sorry, unable to remove the movie ("
-    //                            +removeErr.message+ ")" );
-    //            }
-    //        });
-    //    } else {
-    //        res.send(404, "Sorry, unable to find the movie at this time");
-    //    }
-    //});
+
 };

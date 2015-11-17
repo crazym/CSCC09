@@ -16,7 +16,34 @@
         <div id="nav-collapse" class="navbar-collapse collapse">
             <!--left aligned items-->
             <ul class="nav navbar-nav pull-left">
-                <li class="menu-item"><a id="browse-btn" href="#movies">Browse Movies</a></li>
+                <li id="orderdrop" class="browse-menu dropdown">
+                    <a id="ordering" href="#movies" >Browse Movies</a>
+                    <!--<div class="dropdown-menu" id="orderDiv">-->
+                        <!--<form id="orderForm">-->
+                            <!--<fieldset>-->
+                                <!--<h4>Sort Order</h4>-->
+                                <!--<input class="sortOrder" name="sortOrder" type="radio" value="title" />-->
+                                <!--<label for="sortOrder">Title</label><br/>-->
+                                <!--<input class="sortOrder" name="sortOrder" type="radio" value="director" />-->
+                                <!--<label for="sortOrder">Director</label><br/>-->
+                            <!--</fieldset>-->
+                        <!--</form>-->
+                    <!--</div>-->
+                </li>
+                <li>
+                    <a>Sort</a>
+                    <div class="dropdown-menu" id="orderDiv">
+                        <form id="orderForm">
+                            <fieldset>
+                                <h4>Sort Order</h4>
+                                <input class="sortOrder" name="sortOrder" type="radio" value="title" />
+                                <label for="sortOrder">Title</label><br/>
+                                <input class="sortOrder" name="sortOrder" type="radio" value="director" />
+                                <label for="sortOrder">Director</label><br/>
+                            </fieldset>
+                        </form>
+                    </div>
+                </li>
                 <li class="menu-item"><a id="add-btn" href="#movies/add">Add Movie</a></li>
             </ul>
             <!--right aligned items-->

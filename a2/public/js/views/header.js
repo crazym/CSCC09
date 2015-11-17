@@ -10,8 +10,17 @@ splat.Header = Backbone.View.extend({
     events: {
         // trigger the selectMenuItem funtion with current event target on click of any menu item
         "click .menu-item": function(e) {
-            this.selectMenuItem(e.currentTarget)}
+            this.selectMenuItem(e.currentTarget)},
+        "change input[type='sortOrder']": "sortOrder"  // ADD CODE to select orderInput-element
     },
+
+    sortOrder: function(event) {
+        event.stopPropagation();
+        splat.order = event.target.value;  // set app-level order field
+        Backbone.trigger('orderevent', event);  // trigger event for other views
+        $('... ADD CODE ...').removeClass('open');  // close the dropdown menu
+    },
+
 
     initialize: function () {
         this.render();

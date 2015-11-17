@@ -40,5 +40,6 @@ splat.Reviewer = Backbone.View.extend({
                 splat.utils.requestFailed(err);
             }
         });
+        $(".authattr").trigger("reset");
     }
 })

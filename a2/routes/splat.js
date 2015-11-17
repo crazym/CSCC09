@@ -201,7 +201,7 @@ exports.getReviews = function(req, res){
 
 exports.addReview = function(req, res){
     //console.log("req for addMovie is: ")
-    //console.log(req.body);
+    console.log(req.body);
     var review = new ReviewModel(req.body);
 
     review.save(function (err, review) {

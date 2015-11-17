@@ -99,16 +99,6 @@ splat.AppRouter = Backbone.Router.extend({
                 splat.utils.showAlert('Error', "can't find this movie (perhaps deleted?) [" + id + "]", 'alert-danger');
             } else {
                 var reviewsView = new splat.ReviewsView({model: movieModel});
-                //console.log("reviews for movieModel before loading is ");
-                //console.log(movieModel.reviews);
-                //this.reviewsLoaded = movieModel.reviews.fetch();
-                //this.reviewsLoaded.done(function() {
-                //    console.log("after loading reviews are ");
-                //    console.log(movieModel.reviews);
-                //    var reviewsView = new splat.ReviewsView({collection: movieModel.reviews});
-                //    splat.app.showView('#content', reviewsView);
-                //});
-                //var reviewsView = new splat.ReviewsView({collection: {}});
                 splat.app.showView('#content', reviewsView);
             }
         });

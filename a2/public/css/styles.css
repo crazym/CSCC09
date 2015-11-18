@@ -37,11 +37,11 @@ a.plain:hover {
 
 .freshInfo {
     position: absolute;
-    top: 75%;
-    right: 80%;
+    top: 60%;
+    right: 65%;
     width: 35%;
     color: yellow;
-    font-size: large;
+    font-size: small;
 
 }
 

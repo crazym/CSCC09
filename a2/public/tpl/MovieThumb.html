@@ -3,41 +3,46 @@
 
     <div class="moviedetails">  <!-- keep Reviews-link with details -->
       <a href="#movies/<%= _id %>" class="plain">
-        <video class="img-responsive" controls poster="<%= poster %>"
-	    preload="none">  <!-- none b/c value "metadata" stalls Chrome -->
-            <source src="/movies/<%=_id%>/video" type="video/mp4"/>
-            <!-- fallback -->
-            Your browser does not support the <code>video</code> element.
-        </video>
+        <span>
+          <video class="img-responsive" controls poster="<%= poster %>"
+          preload="none">  <!-- none b/c value "metadata" stalls Chrome -->
+              <source src="/movies/<%=_id%>/video" type="video/mp4"/>
+              <!-- fallback -->
+              Your browser does not support the <code>video</code> element.
+          </video>
           <div class="detailsContainer">
-            <a href="#movies/<%= _id %>/reviews" class="plain">
+            <div class="reviewSwatch pull-left">
 
-              <div class="reviewSwatch pull-left">
-              <img id="thumbSwatch"
-                   src="img/<%if (freshTotal>= 0.5){%>fresh_lg.png<%}else{%>rotten_lg.png<%}%>" class="pull-left img-responsive" />
+              <a href="#movies/<%= _id %>/reviews" class="plain">
+                <span>
+                  <img id="thumbSwatch"
+                       src="img/<%if (freshTotal>= 0.5){%>fresh_lg.png<%}else{%>rotten_lg.png<%}%>" class="pull-left img-responsive" />
 
-              <div class="freshInfo"> <%= Math.round((freshTotal/freshVotes) *100) %>% (<%= freshVotes %>)</div>
+                  <div class="freshInfo"> <%= Math.round((freshTotal/freshVotes) *100) %>% (<%= freshVotes %>)</div>
+                </span>
+              </a>
+            </div>
 
+            <div class="details pull-right">
+              <div class="detailText">
+                <p><strong class="thumbtitle"><%= title %></strong>
+                (<%= new Date(released).getFullYear() %>)<br/></p>
+              </div>
+              <div class="detailText">
+                <p><strong>Directed by: </strong><%= director %><br/></p>
+              </div>
+              <div class="detailText">
+                <p><strong>Starring: </strong><%= starring %><br/></p>
+              </div>
+              <div class="detailText">
+                <p><strong>Genres: </strong><%= genre %> Rating: <%= rating %></p>
               </div>
 
-          <div class="details pull-right">
-            <div class="detailText">
-              <p><strong class="thumbtitle"><%= title %></strong>
-              (<%= new Date(released).getFullYear() %>)<br/></p>
-            </div>
-            <div class="detailText">
-              <p><strong>Directed by: </strong><%= director %><br/></p>
-            </div>
-            <div class="detailText">
-              <p><strong>Starring: </strong><%= starring %><br/></p>
-            </div>
-            <div class="detailText">
-              <p><strong>Genres: </strong><%= genre %> Rating: <%= rating %></p>
-            </div>
 
+            </div>
           </div>
-            </a>
-        </div>
+
+          </span> 
       </a>
     </div>
   </div>

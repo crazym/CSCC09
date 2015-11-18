@@ -1,11 +1,11 @@
 <div class="freshnessSelect">
-    <label class="radio-inline">
+    <label class="radio-inline reviewRadio">
         <input type="radio" id="freshSelect" class="btn btn-primary save authattr"
-               name="freshness" value="1"/> Fresh<img src="img/fresh_lg.png"/>
+               name="freshness" value="1"/> Fresh<img src="img/fresh.gif"/>
     </label>
     <label class="radio-inline">
         <input type="radio" id="rottenSelect" class="btn btn-danger delete authattr"
-               name="freshness" value="0"/> Rotten<img src="img/rotten_lg.png"/></label>
+               name="freshness" value="0"/> Rotten<img src="img/rotten.gif"/></label>
     <span id="freshRating"></span>
 </div>
 
@@ -13,26 +13,30 @@
      is needed - same idea as JSP mapping to Bean fields -->
 <div class="form-horizontal">
     <div class="form-group">
-        <label for="reviewText" class="col-sm-3 control-label">Enter your review</label>
-         <textarea id="reviewText" class="col-sm-9 authattr synopsis form-control"
+        <div>
+        <label for="reviewText" class="col-sm-3 enterReview">Enter your review</label>
+        </div>
+        <div>
+         <textarea id="reviewText" class="authattr synopsis form-control typeReview"
                    placeholder="Put Your Comments Here :)"
                    name="reviewText" rows="5" ><%= reviewText %></textarea> <br/>
+            </div>
     </div>
     </div>
-    <div class="form-group">
+    <div class="form-group reviewer col-sm-2 ">
         <label for="reviewName" class="col-sm-3 control-label">Name</label>
         <input id= "reviewName" type="text" class="col-sm-9 authattr"
                name="reviewName" placeholder="e.g. Minty"
                value="<%= reviewName %>"/>
     </div>
-    <div class="form-group">
+    <div class="form-group reviewer col-sm-2 ">
         <label for="reviewAffil" class="col-sm-3 control-label">Affiliation</label>
         <input id= "reviewAffil" type="text" class="col-sm-9 authattr"
                name="reviewAffil" placeholder="e.g. mz"
                value="<%= reviewAffil %>"/>
     </div>
 </div>
-
+<div><br/><br/></div>
 <div class="saveActions">
     <input type="button" id="reviewmovie" class="btn btn-primary save authclass" name="submit" value="Review Movie"/>
 </div>

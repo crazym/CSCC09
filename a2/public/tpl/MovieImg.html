@@ -1,6 +1,7 @@
 <div>
-    <a class="btn btn-lg home-btn" href="<%if (typeof _id === 'undefined'){%>#movies/add<%}else{%>#movies/<%= _id %>/reviews<%}%>">
-        <div class="reviewSwatch pull-left">
+    <div id="swatchButton">
+    <a class="btn btn-lg home-btn pull-left" href="<%if (typeof _id === 'undefined'){%>#movies/add<%}else{%>#movies/<%= _id %>/reviews<%}%>">
+        <div class="movieSwatch pull-left">
             <img id="movieSwatch"
                  src="img/<%if (freshTotal>= 0.5){%>fresh_lg.png<%}else{%>rotten_lg.png<%}%>" class="pull-left img-responsive" />
 
@@ -25,4 +26,5 @@
        <em class="photoUpload">drag-drop photo onto above image, or</em>
      </p>
   </div>
+      </div>
 </div>

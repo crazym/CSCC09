@@ -102,17 +102,96 @@ h5 {
     padding: 0 1em;
 }
 
+.reviews {
+    margin-top: 1em;
+    padding-left: 2em;
+    width: 31%;
+}
+
+.saveActions {
+    margin-left: 2em;
+}
+
+#reviewmovie {
+    background-image: linear-gradient(to bottom, #5cb85c 0%, #3c763d 100%);
+    margin-right: 7em;
+}
+
 .reviewSwatch {
     width: 35%;
 }
-
+.movieSwatch {
+    width: 85%;
+}
+#swatchButton {
+    height: 7em;
+}
 .movieFreshInfo {
     position: absolute;
     top: 10%;
-    right: 75%;
+    right: 70%;
     width: 35%;
     color: yellow;
     font-size: large;
+}
+
+#freshRating {
+    color: red;
+    font-size: large;
+}
+
+.reviewer {
+    width: 30em;
+}
+
+#reviewAffil {
+    padding-left: 2em;
+}
+
+.reviewThumb {
+    background-color: lightyellow;
+    border-radius: 4px;
+    color: black;
+    height: 3.3em;
+}
+
+.enterReview {
+    width: 90%;
+    margin-left: 3em;
+    text-align: left;
+}
+
+.typeReview {
+    margin-left: 3em;
+    width: 90%;
+}
+
+#rottenSelect {
+    color: black;
+}
+
+#freshSelect {
+    color: black;
+
+}
+
+.reviewRadio {
+    margin-left: 1em;
+}
+
+.radio-inline {
+    color: black;
+}
+
+.freshnessSelect {
+    width: 95%;
+    align-self: center;
+    border-radius: 0.5em;
+    background-color: lightyellow;
+    border-color: #449d44;
+    border-width: 2em;
+    margin-left: 1.3em;
+    padding-right: 30em;
 }
 
 .detailsContainer {

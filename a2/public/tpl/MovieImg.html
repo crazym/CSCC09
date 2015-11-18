@@ -1,15 +1,20 @@
 <div>
-    <div class="reviewSwatch pull-left">
-        <img id="thumbSwatch"
-             src="img/<%if (freshTotal>= 0.5){%>fresh_lg.png<%}else{%>rotten_lg.png<%}%>" class="pull-left img-responsive" />
+    <a class="btn btn-lg home-btn" href="<%if (typeof _id === 'undefined'){%>#movies/add<%}else{%>#movies/<%= _id %>/reviews<%}%>">
+        <div class="reviewSwatch pull-left">
+            <img id="movieSwatch"
+                 src="img/<%if (freshTotal>= 0.5){%>fresh_lg.png<%}else{%>rotten_lg.png<%}%>" class="pull-left img-responsive" />
 
-        <div class="freshInfo"> <%= freshTotal %> (<%= freshVotes %>)</div>
 
-    </div>
+            <div class="movieFreshInfo"> <%= freshTotal/freshVotes %> (<%= freshVotes %>)</div>
+
+        </div>
+    </a>
     <div class="editActions">
         <input type="button" id="moviesave" class="btn btn-primary save authclass" name="save" value="Save Changes"/>
         <input type="button" id="moviedel" class="btn btn-danger delete authclass" name="delete" value="Delete Movie"/>
     </div>
+
+
   <p id="dropImage">
     <img id="editImage" class="editImage img-responsive" src="<%= poster %>"/>
   </p>

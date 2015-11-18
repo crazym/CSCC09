@@ -106,6 +106,15 @@ h5 {
     width: 35%;
 }
 
+.movieFreshInfo {
+    position: absolute;
+    top: 10%;
+    right: 75%;
+    width: 35%;
+    color: yellow;
+    font-size: large;
+}
+
 .detailsContainer {
     display: flex;
     flex-direction: row;

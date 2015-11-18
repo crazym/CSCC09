@@ -7,9 +7,6 @@ splat.ReviewsView = Backbone.View.extend({
     initialize: function () {
         // other stuff ? ...
 
-        this.newReview = new splat.Review();
-        this.newReview.set("movieId", this.model.id);
-
         this.reviews = new splat.Reviews();
         this.reviews.url = '/movies/' + this.model.id + '/reviews';
 
@@ -25,19 +22,16 @@ splat.ReviewsView = Backbone.View.extend({
         // render self (from ReviewsView template), then Reviewer subview,
         // then ReviewThumbs subview, then showFreshness (current aggregate rating)
         // can all be chained, as in this.renderX().renderY().renderZ() ...
-
         var self = this;
         this.$el.html(this.template());
 
         this.reviewsLoaded.done(function(){
-            self.newReview.collection = self.reviews;
-            self.reviewerView = new splat.Reviewer({model: self.newReview});
+            self.reviewerView = new splat.Reviewer({collection: self.reviews, movieId: self.model.id});
             self.$('#reviewer').append(self.reviewerView.render().el);
 
             self.renderReviews();
 
             self.showScore();
-
 
         });
 
@@ -50,6 +44,8 @@ splat.ReviewsView = Backbone.View.extend({
      – if not, displays a freshness-score computed as freshVotes/freshTotal
      */
     showScore: function (){
+
+        self.$('#reviewer #freshRating').html('');
         var scoreText;
         if (this.reviews.isEmpty()) {
             scoreText = "... no reviews yet";

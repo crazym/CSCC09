@@ -6,8 +6,17 @@ splat.Reviewer = Backbone.View.extend({
 
     events: {
         "change .authattr": "change",
-        "click #reviewmovie": "reviewMovie",
-        //"click #moviedel": "deleteMovie",
+        "click #reviewmovie": "reviewMovie"
+    },
+
+    initialize: function(options){
+
+        this.model = new splat.Review();
+        //console.log(options.movieId);
+        this.model.set("movieId", options.movieId);
+        //console.log(this.model);
+        this.movieId = options.movieId;
+
     },
 
     render: function () {
@@ -30,16 +39,22 @@ splat.Reviewer = Backbone.View.extend({
     /* click-event handler persists Review model to server with
      model.save() or collection.create()*/
     reviewMovie: function () {
-        this.model.collection.create(this.model, {
+        var self = this;
+        this.collection.create(this.model, {
             wait: true,
             success: function(model, response) {
                 splat.utils.showAlert('Success!', 'Review Added', 'alert-success');
+                // set a new Review model for next input
+                self.model = new splat.Review();
+                self.model.set("movieId", self.movieId);
+                // clear current form data
+                $("input[type=text] , textarea").each(function(){
+                        $(this).val('');
+                    });
             },
             error: function (model, err) {
-                console.log(err);
                 splat.utils.requestFailed(err);
             }
         });
-        $(".authattr").trigger("reset");
     }
 })

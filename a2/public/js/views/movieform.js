@@ -7,7 +7,7 @@ splat.MovieForm = Backbone.View.extend({
     events: {
         "change .authattr"        : "change",
         "click #moviesave"   : "beforeSave",
-        "click #moviedel" : "deleteMovie",
+        "click #moviedel" : "deleteMovie"
     },
 
     render:function () {

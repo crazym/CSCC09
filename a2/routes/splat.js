@@ -188,10 +188,7 @@ exports.deleteMovie = function(req, res){
 
 // retrieve all Movie models on collection
 exports.getReviews = function(req, res){
-    console.log("getting Reviews for id: " + req.params.id)
     ReviewModel.find({movieId: req.params.id}, function(err, reviews) {
-        console.log("reviews for id: " + req.params);
-        console.log(reviews);
         if (!err) {
             res.status(200).send(reviews);
         } else {
@@ -201,18 +198,38 @@ exports.getReviews = function(req, res){
 };
 
 exports.addReview = function(req, res){
-    //console.log("req for addMovie is: ")
-    console.log(req.body);
     var review = new ReviewModel(req.body);
 
     review.save(function (err, review) {
         if (err) {
-            res.status(500).send("Sorry, unable to retrieve movie at this time ("
+            res.status(500).send("Sorry, unable to save review ("
                 + err.message + ")");
-        } else if (!review) {
-            res.status(404).send("Sorry, that movie doesn't exist; try reselecting from Browse view");
         } else {
-            res.status(200).send(review);
+            // retrieve associated movie
+            MovieModel.findById(req.params.id, function(err, movie) {
+                if (err) {
+                    res.status(500).send("Sorry, unable to retrieve associated movie at this time ("
+                        +err.message+ ")" );
+                } else if (!movie) {
+                    res.status(404).send("Sorry, that movie doesn't exist; try reselecting from Browse view");
+                } else {
+                    //update freshTotal & freshVotes of associated movie
+                    movie.freshVotes +=1;
+                    if (review.freshness == 1){
+                        movie.freshTotal +=1;
+                    }
+                    movie.save(function (err, movie) {
+                        if (err) {
+                            res.status(500).send("Sorry, unable to save movie at this time ("
+                                + err.message + ")");
+                        } else if (!movie) {
+                            res.status(404).send("Sorry, that movie doesn't exist; try reselecting from Browse view");
+                        } else {
+                            res.status(200).send(review);
+                        }
+                    });
+                }
+            });
         }
     });
 

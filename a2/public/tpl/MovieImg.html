@@ -6,6 +6,10 @@
         <div class="freshInfo"> <%= freshTotal %> (<%= freshVotes %>)</div>
 
     </div>
+    <div class="editActions">
+        <input type="button" id="moviesave" class="btn btn-primary save authclass" name="save" value="Save Changes"/>
+        <input type="button" id="moviedel" class="btn btn-danger delete authclass" name="delete" value="Delete Movie"/>
+    </div>
   <p id="dropImage">
     <img id="editImage" class="editImage img-responsive" src="<%= poster %>"/>
   </p>

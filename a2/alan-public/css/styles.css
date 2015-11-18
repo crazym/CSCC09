@@ -25,6 +25,16 @@ a.plain:hover {
     text-decoration: none;
 }
 
+.freshInfo {
+    position: absolute;
+    top: 75%;
+    right: 80%;
+    width: 35%;
+    color: yellow;
+    font-size: large;
+
+}
+
 .status-bar {
     height: 60px;
 }
@@ -91,6 +101,36 @@ h5 {
 .thumbnail .details {
     padding: 0 1em;
 }
+
+.reviewSwatch {
+    width: 35%;
+}
+
+.detailsContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.details {
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.detailText {
+    min-width: 0;
+    flex-basis: 40%;
+}
+
+.detailText p{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+
+}
+
 
 img.thumbnail {
     height: auto;
@@ -232,6 +272,15 @@ div.has-error input {
 .fileInput {
     margin-top: -2px;
 }
+
+.dropdown-menu {
+    color: gray;
+}
+
+.dropdown-menu h4 {
+    margin-top: 0px;
+}
+
 
 #movieform {
     font-size:80%;

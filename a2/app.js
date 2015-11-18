@@ -70,6 +70,10 @@ app.get('/', splat.api);
 
 // Retrieve all movies
 app.get('/movies', splat.getMovies);
+
+// vedio playback
+app.get('/movies/:id/video', splat.playMovie);
+
 // Retrieve a single movie by its id attribute
 app.get('/movies/:id', splat.getMovie);
 // add a new movie

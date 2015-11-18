@@ -167,3 +167,58 @@ exports.deleteMovie = function(req, res){
     //    }
     //});
 };
+
+exports.playMovie = function(req, res) {
+    if (req.params.url) {
+        // compute absolute file-system video path from __dirname and URL with id
+        //var file = path.resolve(__dirname, "/../videos/") + req.params.url + req.params.id + ".mp4";
+        var file = __dirname + "/../videos/" + req.params.id + ".mp4";
+    } else {
+        //var file = path.resolve(__dirname, "/../videos/") + "default.mp4";
+        var file = __dirname + "/../videos/default.mp4";
+    }
+
+    console.log("aaa"+req.params.id);
+        // get HTTP request "range" header, and parse it to get starting byte position
+        var range = req.headers.range.replace(/bytes=/, "").split("-"); ; // ADD CODE to access range header
+        var start = Number(range[0]); // ADD CODE to compute starting byte position
+
+            // get a file-stats object for the requested video file, including its size
+            fs.stat(file, function(err, stats) {
+                // set end position from range header or default to video file size
+                if (range[1] != "") {
+                    var end = range[1];
+                } else {
+                    var end = stats.size - 1;
+                }
+                    // set chunksize to be the difference between end and start values +1
+
+                    // send HTTP "partial-content" status (206) together with
+                    // HTML5-compatible response-headers describing video being sent
+                    res.writeHead(206, {
+                        // ADD CODE - see tutorial 7 classroom slide #22
+                        "Content-Range": "bytes " + start + "-" + end + "/" + stats.size,
+                        "Content-Length": end - start + 1,
+                        "Accept-Ranges": "bytes",
+                        "Content-Type": "video/mp4"
+                    });
+
+                // create ReadStream object, specifying start, end values computed
+                // above to read range of bytes rather than entire file
+                var stream = fs.createReadStream(file, { start: start, end: end })
+                    // when ReadStream is open
+                    .on("open", function() {
+                        stream.pipe(res);
+                        // use stream pipe() method to send the HTTP response object,
+                        // with flow automatically managed so destination is not overwhelmed
+                        // ADD CODE
+                        // when error receiving data from stream, send error back to client.
+                        // stream is auto closed
+                    }).on("error", function(err) {
+                        res.send(404, "Cannot get Movie Trailer.");
+                    });
+            });
+    //} else {
+    //
+    //}
+};

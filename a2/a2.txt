@@ -1,0 +1,5 @@
+1. Extra Features
+    * play default videos if no video is set :)
+    * hmm, we may have different layout regarding different browser and/or window size?...
+2. Unfinished features
+    * hopefully no :p

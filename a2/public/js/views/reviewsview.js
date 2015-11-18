@@ -54,8 +54,8 @@ splat.ReviewsView = Backbone.View.extend({
             this.reviews.each(function (review) {
                 score += review.get("freshness");
             });
-            score = (score/this.reviews.size()) * 100;
-            scoreText = "currently rated:" + score + "% (" + this.reviews.size() + ")";
+            score = Math.round((score/this.reviews.size()) * 1000) / 10;
+            scoreText = "currently rated: <img src='img/fresh.gif'/>" + score + "% (" + this.reviews.size() + ")";
         }
         self.$('#reviewer #freshRating').append(scoreText);
         return this;

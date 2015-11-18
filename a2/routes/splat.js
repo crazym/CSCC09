@@ -45,7 +45,7 @@ var ReviewSchema = new mongoose.Schema({
 // Constraints
 // each title:director pair must be unique; duplicates are dropped
 MovieSchema.index({title:1,director:1}, { "unique": true });
-ReviewSchema.index({reviewName:1,movieId:1}, { "unique": true });  // ???? ADD CODE
+ReviewSchema.index({reviewName:1,reviewAffil:1, movieId:1}, { "unique": true });  // ???? ADD CODE
 
 // Models
 // MovieModel is a Model-constructor function that can
@@ -233,23 +233,6 @@ exports.addReview = function(req, res){
         }
     });
 
-
-    //MovieModel.findById(req.params.id, function(findErr, movie){
-    //    if(!findErr && movie){
-    //        // update movie attributes from req.body
-    //        movie.remove(function(removeErr) {
-    //            if (!removeErr) {
-    //                // TODO return what?
-    //                res.status(200);
-    //            } else {
-    //                res.send(500, "Sorry, unable to remove the movie ("
-    //                            +removeErr.message+ ")" );
-    //            }
-    //        });
-    //    } else {
-    //        res.send(404, "Sorry, unable to find the movie at this time");
-    //    }
-    //});
 };
 
 exports.playMovie = function(req, res) {

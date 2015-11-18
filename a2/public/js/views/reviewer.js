@@ -39,22 +39,49 @@ splat.Reviewer = Backbone.View.extend({
     /* click-event handler persists Review model to server with
      model.save() or collection.create()*/
     reviewMovie: function () {
+        var valid = this.checkValidation();
         var self = this;
-        this.collection.create(this.model, {
-            wait: true,
-            success: function(model, response) {
-                splat.utils.showAlert('Success!', 'Review Added', 'alert-success');
-                // set a new Review model for next input
-                self.model = new splat.Review();
-                self.model.set("movieId", self.movieId);
-                // clear current form data
-                $("input[type=text] , textarea").each(function(){
+
+        if (valid) {
+            this.collection.create(this.model, {
+                wait: true,
+                success: function(model, response) {
+                    splat.utils.showAlert('Success!', 'Review Added', 'alert-success');
+                    // set a new Review model for next input
+                    self.model = new splat.Review();
+                    self.model.set("movieId", self.movieId);
+                    // clear current form data
+                    $("input[type=text] , textarea").each(function(){
                         $(this).val('');
                     });
-            },
-            error: function (model, err) {
-                splat.utils.requestFailed(err);
-            }
+                    $(".freshnessSelect input[type='radio']").each(function() {
+                        this.checked = false;
+                    });
+                },
+                error: function (model, err) {
+                    splat.utils.requestFailed(err);
+                }
+            });
+        }
+    },
+
+    checkValidation: function (){
+        var valid = true;
+        var change = {};
+        $(".authattr input[type='text']").each(function() {
+            change[this.name] = this.value;
         });
+        $(".authattr textarea").each(function() {
+            change[this.name] = this.value;
+        });
+        change["freshness"] = $(".freshnessSelect input[type='radio']:checked").val();
+        for (var name in change) {
+            console.log(name + "->" + change[name]);
+            if (typeof change[name] === 'undefined') {
+                valid = false;
+                splat.utils.showAlert('Warning: ', "Review Fields (" + name + ") cannot be empty", 'alert-warning');
+            }
+        }
+        return valid;
     }
 })

@@ -4,10 +4,7 @@
         <div class="movieSwatch pull-left">
             <img id="movieSwatch"
                  src="img/<%if (freshTotal>= 0.5){%>fresh_lg.png<%}else{%>rotten_lg.png<%}%>" class="pull-left img-responsive" />
-
-
             <div class="movieFreshInfo"> <%= Math.round((freshTotal/freshVotes) *100) %>% (<%= freshVotes %>)</div>
-
         </div>
     </a>
 

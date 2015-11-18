@@ -16,7 +16,7 @@
               <img id="thumbSwatch"
                    src="img/<%if (freshTotal>= 0.5){%>fresh_lg.png<%}else{%>rotten_lg.png<%}%>" class="pull-left img-responsive" />
 
-              <div class="freshInfo"> <%= freshTotal %> (<%= freshVotes %>)</div>
+              <div class="freshInfo"> <%= Math.round((freshTotal/freshVotes) *100) %>% (<%= freshVotes %>)</div>
 
               </div>
             </a>

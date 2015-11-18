@@ -5,15 +5,10 @@
                  src="img/<%if (freshTotal>= 0.5){%>fresh_lg.png<%}else{%>rotten_lg.png<%}%>" class="pull-left img-responsive" />
 
 
-            <div class="movieFreshInfo"> <%= freshTotal/freshVotes %> (<%= freshVotes %>)</div>
+            <div class="movieFreshInfo"> <%= Math.round((freshTotal/freshVotes) *100) %>% (<%= freshVotes %>)</div>
 
         </div>
     </a>
-    <div class="editActions">
-        <input type="button" id="moviesave" class="btn btn-primary save authclass" name="save" value="Save Changes"/>
-        <input type="button" id="moviedel" class="btn btn-danger delete authclass" name="delete" value="Delete Movie"/>
-    </div>
-
 
   <p id="dropImage">
     <img id="editImage" class="editImage img-responsive" src="<%= poster %>"/>

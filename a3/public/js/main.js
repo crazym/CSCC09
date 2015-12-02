@@ -144,6 +144,19 @@ Backbone.View.prototype.close = function () {
 
 };
 
+
+// insert the server-generated CSRF token embedded in startup page index.html
+// as an HTTP request header with name X-CSRF-Token.
+Backbone.ajax = function() {
+    // Invoke $.ajaxSetup in the context of Backbone.$
+    Backbone.$.ajaxSetup.call(Backbone.$, {beforeSend: function(jqXHR){
+        console.log("csrfToekn is: " + splat.csrftoken);
+        jqXHR.setRequestHeader("X-CSRF-Token", splat.csrftoken);
+    }});
+    return Backbone.$.ajax.apply(Backbone.$, arguments);
+};
+
+
 splat.utils.loadTemplates(['Home', 'Header', 'About', 'MovieThumb',
     'Details', 'MovieForm', 'MovieImg', 'Reviewer', 'ReviewsView',
     'Signup', 'Signin'], function() {

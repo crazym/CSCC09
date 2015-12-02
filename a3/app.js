@@ -15,6 +15,7 @@ var https = require("https"),
     logger = require("morgan"),
     compression = require("compression"),
     session = require("express-session"),
+    csrf = require("csurf"),
     bodyParser = require("body-parser"),
     methodOverride = require("method-override"),
     directory = require("serve-index"),
@@ -44,8 +45,8 @@ function isAuthd(req, res, next) {
 // middleware check that the session-userid matches the userid passed
 // in the request body, e.g. when deleting or updating a model
 function hasPermission(req, res, next) {
-    //console.log("session id is " + req.session.userid + "and movie user is " + req.body.userid);
-    if (req.session.userid == req.userid || req.body.userid == null){
+    //console.log("session id is " + req.session.userid + " and movie user is " + req.body.userid);
+    if (req.session.userid === req.body.userid || req.body.userid == null){
         next();
     } else{
         res.status(403).send("Authorization failed, cannot edit/delete movie that's not created by you.");
@@ -82,14 +83,26 @@ app.use(session({
     cookie: {
         //maxAge:config.sessionTimeout,  // A3 ADD CODE
          maxAge: null,  // no-expire session-cookies for testing
-        httpOnly: true },
+        secure: true,// only send this cookie in requests going to HTTPS endpoints
+        httpOnly: true // not allow client side script access to the cookie
+    },
     saveUninitialized: false,
     resave: false
+    // TODO add HSTS response headers
 }));
+
+app.use(csrf());
+// Setup for rendering csurf token into index.html at app-startup
+app.engine('.html', require('ejs').__express);
+app.set('views', __dirname + '/public');
+// When client-side requests index.html, perform template substitution on it
+app.get('/index.html', function(req, res) {
+    // req.csrfToken() returns a fresh random CSRF token value
+    res.render('index.html', {csrftoken: req.csrfToken()});
+});
 
 // checks req.body for HTTP method overrides
 app.use(methodOverride());
-
 
 // App routes (API) - implementation resides in routes/splat.js
 
@@ -143,8 +156,23 @@ app.use(function (req, res) {
     res.status(404).send('<h3>File Not Found</h3>');
 });
 
+
+app.use(function(err, req, res, next) {
+    console.log("err code: "+ err.code);
+    console.log("err code: "+ req.head.X-CSRF-Token);
+    if (err.code ==="EBADCSRFTOKEN") {
+        // send error response to client
+        res.status(403).send("Invalid CSRF token, please refresh the page.");
+    } else {
+        return next(err);
+    }
+});
+
 // Start HTTP server
-https.createServer(options, app).listen(app.get('port'), function (){
+https.createServer(options, app, function(){
+    res.writeHead(200, {    'Content-Type': 'text/plain',
+        "Strict-Transport-Security": "max-age=604800"});
+}).listen(app.get('port'), function (){
     console.log("Express server listening on port %d in %s mode",
         app.get('port'), config.env );
 });

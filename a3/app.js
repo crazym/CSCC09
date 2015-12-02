@@ -6,7 +6,7 @@
  * exported from that file (with "exports") can now be dotted off
  * the value returned by require(), in this case e.g. splat.api
  */
-var http = require("http"),
+var https = require("https"),
     express = require("express"),
     fs = require("fs"),
     path = require("path"),
@@ -25,6 +25,12 @@ var http = require("http"),
 // such as "port"
     config = require("./config"),
     splat = require('./routes/splat.js');  // route handlers
+
+// for HTTPS connections
+var options = {
+    key: fs.readFileSync('key.pem'),  // RSA private-key
+    cert: fs.readFileSync('cert.pem')  // RSA public-key certificate
+};
 
 // middleware check that req is associated with an authenticated session
 function isAuthd(req, res, next) {
@@ -138,7 +144,7 @@ app.use(function (req, res) {
 });
 
 // Start HTTP server
-http.createServer(app).listen(app.get('port'), function (){
+https.createServer(options, app).listen(app.get('port'), function (){
     console.log("Express server listening on port %d in %s mode",
         app.get('port'), config.env );
 });

@@ -366,7 +366,7 @@ exports.auth = function (req, res) {
           // TODO hmm, salt?
           bcrypt.compare(password, user.password, function(compErr, match) {
               if (!match){
-                  res.status(403).("Login failed, please check your password.");
+                  res.status(403).send("Login failed, please check your password.");
               } else{
                   var sess = req.session;  // create session
                   sess.auth = true;

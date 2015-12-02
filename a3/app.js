@@ -21,32 +21,39 @@ var http = require("http"),
     errorHandler = require("errorhandler"),
     basicAuth = require("basic-auth-connect"),  // add for HTTP auth
 
-    // config is an object module, that defines app-config attribues,
-    // such as "port"
+// config is an object module, that defines app-config attribues,
+// such as "port"
     config = require("./config"),
     splat = require('./routes/splat.js');  // route handlers
 
 // middleware check that req is associated with an authenticated session
 function isAuthd(req, res, next) {
-    // A3 ADD CODE BLOCK
-        return next();
+    if (req.session.auth){
+        next();
+    } else{
+        res.status(403).send("Authentication failed, please login before performing the action.");
+    }
 };
 
 // middleware check that the session-userid matches the userid passed
 // in the request body, e.g. when deleting or updating a model
 function hasPermission(req, res, next) {
-    // A3 ADD CODE BLOCK
-        return next();
+    //console.log("session id is " + req.session.userid + "and movie user is " + req.body.userid);
+    if (req.session.userid == req.userid || req.body.userid == null){
+        next();
+    } else{
+        res.status(403).send("Authorization failed, cannot edit/delete movie that's not created by you.");
+    }
 };
 
 // Create Express app-server
-var app = express();   
+var app = express();
 
 // use PORT enviro variable, or local config-file value
 app.set('port', process.env.PORT || config.port);
 
 // activate basic HTTP authentication (to protect your solution files)
-app.use(basicAuth(config.basicAuthUser, config.basicAuthPass));  
+app.use(basicAuth(config.basicAuthUser, config.basicAuthPass));
 
 // change param to control level of logging
 app.use(logger(config.env));  /* 'default', 'short', 'tiny', 'dev' */
@@ -56,21 +63,22 @@ app.use(compression());
 
 app.use(bodyParser.json({limit: '5mb'}));
 app.use(bodyParser.urlencoded({
-	extended: true, limit: '5mb'
+    extended: true, limit: '5mb'
 }));
 
 app.use(multer({dest: __dirname + '/public/img/uploads/'}));
 
 // Session config, based on Express.session, values taken from config.js
 app.use(session({
-	name: 'splat.sess',
-	secret: config.sessionSecret,  // A3 ADD CODE
-	rolling: true,  // reset session timer on every client access
-	cookie: { maxAge:config.sessionTimeout,  // A3 ADD CODE
-		  // maxAge: null,  // no-expire session-cookies for testing
-		  httpOnly: true },
-	saveUninitialized: false,
-	resave: false
+    name: 'splat.sess',
+    secret: config.sessionSecret,  // A3 ADD CODE
+    rolling: true,  // reset session timer on every client access
+    cookie: {
+        //maxAge:config.sessionTimeout,  // A3 ADD CODE
+         maxAge: null,  // no-expire session-cookies for testing
+        httpOnly: true },
+    saveUninitialized: false,
+    resave: false
 }));
 
 // checks req.body for HTTP method overrides
@@ -131,6 +139,6 @@ app.use(function (req, res) {
 
 // Start HTTP server
 http.createServer(app).listen(app.get('port'), function (){
-  console.log("Express server listening on port %d in %s mode",
-                app.get('port'), config.env );
+    console.log("Express server listening on port %d in %s mode",
+        app.get('port'), config.env );
 });

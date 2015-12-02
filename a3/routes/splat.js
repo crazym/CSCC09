@@ -344,7 +344,7 @@ exports.playMovie = function(req, res) {
 };
 
 exports.isAuth = function (req, res) {
-console.log('isAuth ', req.session);
+    console.log('isAuth ', req.session);
     if (req.session && req.session.auth) {
             res.send(200, {'userid': req.session.userid,
                 'username': req.session.username});
@@ -362,20 +362,28 @@ exports.auth = function (req, res) {
     };
     User.findOne({username:username}, function(err, user){
       if (user !== null) {
-      /* A3 ADD CODE BLOCK ... */
-	  var sess = req.session;  // create session
-	  sess.auth = true;
-	  sess.username = username;
-	  sess.userid = user.id;
-	  // set session-timeout, from config file
-          if (req.body.remember) {
-              // if "remember me" selected on signin form,
-	      // extend session to 10*default-session-timeout
-	      // A3 ADD CODE BLOCK
-	  }
-          res.status(200).send({'userid': user.id, 'username': username});
-	  // A3 ADD CODE BLOCK
-      } else if (!err) {  // unrecognized username, but not DB error
+          // compare the input password with password in db
+          // TODO hmm, salt?
+          bcrypt.compare(password, user.password, function(compErr, match) {
+              if (!match){
+                  res.status(403).("Login failed, please check your password.");
+              } else{
+                  var sess = req.session;  // create session
+                  sess.auth = true;
+                  sess.username = username;
+                  sess.userid = user.id;
+                  // set session-timeout, from config file
+                  if (req.body.remember) {
+                      // if "remember me" selected on signin form,
+                      // extend session to 10*default-session-timeout
+                      // TODO not sure what default is lol
+                      sess.timeout = 10*config.sessionTimeout;
+                  }
+                  res.status(200).send({'userid': user.id, 'username': username});
+              }
+          });
+	  // TODO A3 ADD CODE BLOCK?????
+      } else if (!err) {  // unrecognized username(a null user), but not DB error
         res.status(403).send('Invalid username-password combination, please try again');
       } else {  // error response from DB
         res.status(500).send("Unable to login at this time; please try again later " 
@@ -390,23 +398,27 @@ exports.auth = function (req, res) {
 
 exports.signup = function(req, res) {
   var user = new User(req.body);
-    /* A3 ADD CODE BLOCK ... */
-    // store the hashed-with-salt password in the DB
-      user.password = 0;  // A3 ADD CODE
-      user.save(function (serr, result) {
-        if (!serr) {
-          req.session.auth = true;
-          req.session.username = result.username;
-          req.session.userid = result.id;
-          res.status(200).send({'username':result.username, 'userid':result.id});
-        } else {
-          console.log(serr);
-          if (serr.err && serr.err.indexOf("E11000") !== -1) {
-            res.status(403).send("Sorry, username '"+user.username+
-                "' is already taken; please choose another username");
-          } else {
-            res.status(500).send("Unable to create account at this time; please try again later (" +serr.message+ ")");
-          }
-        }
-      });
+    bcrypt.genSalt(10, function(gerr, salt) {
+        bcrypt.hash(user.password, salt, function(herr, hash) {
+            // store the hashed-with-salt password in the DB
+            user.password = hash;
+            user.save(function (serr, result) {
+                if (!serr) {
+                    req.session.auth = true;
+                    req.session.username = result.username;
+                    req.session.userid = result.id;
+                    res.status(200).send({'username':result.username, 'userid':result.id});
+                } else {
+                    console.log(serr);
+                    if (serr.err && serr.err.indexOf("E11000") !== -1) {
+                        res.status(403).send("Sorry, username '"+user.username+
+                            "' is already taken; please choose another username");
+                    } else {
+                        res.status(500).send("Unable to create account at this time; please try again later (" +serr.message+ ")");
+                    }
+                }
+            });
+        })
+    })
+
 };

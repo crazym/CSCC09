@@ -81,8 +81,8 @@ app.use(session({
     secret: config.sessionSecret,  // A3 ADD CODE
     rolling: true,  // reset session timer on every client access
     cookie: {
-        //maxAge:config.sessionTimeout,  // A3 ADD CODE
-         maxAge: null,  // no-expire session-cookies for testing
+        maxAge:config.sessionTimeout,  // A3 ADD CODE
+         //maxAge: null,  // no-expire session-cookies for testing
         secure: true,// only send this cookie in requests going to HTTPS endpoints
         httpOnly: true // not allow client side script access to the cookie
     },
@@ -94,7 +94,7 @@ app.use(session({
 app.use(csrf());
 // Setup for rendering csurf token into index.html at app-startup
 app.engine('.html', require('ejs').__express);
-app.set('views', __dirname + '/public');
+app.set('views', __dirname + '/public'); // why set views??
 app.get('/test/test.html',function(req, res) {
     res.render('test/test.html',
         {csrftoken: req.csrfToken()});
@@ -142,10 +142,10 @@ app.post('/movies/:id/reviews', isAuthd, splat.addReview);
 app.get('/movies/:id/video', splat.playMovie);
 
 // User login/logout
-app.put('/user', splat.auth);
+app.put('/auth', splat.auth);
 
 // User signup
-app.post('/user', splat.signup);
+app.post('/auth', splat.signup);
 
 // location of static content
 app.use(express.static(__dirname +  "/public"));

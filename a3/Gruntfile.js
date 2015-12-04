@@ -8,13 +8,14 @@ module.exports = function(grunt) {
             },
             build: {
                 src: [
+                    'public/js/utils.js',
                     'public/js/models/review.js',
                     'public/js/collections/reviews.js',
                     'public/js/models/movie.js',
                     'public/js/collections/movies.js',
                     'public/js/models/user.js',
-                    'public/js/collections/user.js',
-                    'public/js/models/review.js',
+                    'public/js/collections/users.js',
+                    'public/js/views/header.js',
                     'public/js/views/home.js',
                     'public/js/views/signup.js',
                     'public/js/views/signin.js',

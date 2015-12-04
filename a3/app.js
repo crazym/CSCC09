@@ -100,6 +100,10 @@ app.get('/index.html', function(req, res) {
     // req.csrfToken() returns a fresh random CSRF token value
     res.render('index.html', {csrftoken: req.csrfToken()});
 });
+app.get('/test/test.html',function(req, res) {
+    res.render('test/test.html',
+        {csrftoken: req.csrfToken()});
+});
 
 // checks req.body for HTTP method overrides
 app.use(methodOverride());

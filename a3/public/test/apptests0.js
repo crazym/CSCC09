@@ -2,24 +2,30 @@ QUnit.jUnitReport = function(report) {
     console.log(report.xml);   // send XML output report to console
 };
 
-test('Models can be initialized correctly', function() {
+
+test('Check model initialization parameters and default values', function() {
 
     //create a new instance of a User model
-    var review = new splat.Review({'freshness': 1.0,
-        'reviewtext': 'Tientien rocks!',
-        'reviewname': 'minty',
-        'reviewaffil':'zhangmao',
-        'movieid': '557761f092e40db92c3ccdae'});
+    var user = new splat.User({username: "Noah", password: "Jonah"});
     // test that model has parameter attributes
-    equal(review.get("freshness"), 1, "Review freshness set correctly");
-    equal(review.get("reviewtext"), 'Tientien rocks!', "Review text set correctly");
-    equal(review.get("reviewname"), 'minty', "Review name set correctly");
-    equal(review.get("reviewaffil"), 'zhangmao', "Review affiliation set correctly");
-    equal(review.get("movieid"), '557761f092e40db92c3ccdae', "Movie id set correctly");
+    equal(user.get("username"), "Noah", "User title set correctly");
+    equal(user.get("password"), "Jonah", "User director set correctly");
 
+    // test that Movie model has correct default values upon instantiation
+    var movie = new splat.Movie();
+    equal(movie.get("poster"), "img/placeholder.png",
+        "Movie default value set correctly");
 });
-// TODO
-test("Show Validation Error on bad input field in movieForm.", function() {
+
+test( "Inspect jQuery.getJSON's usage of jQuery.ajax", function() {
+    this.spy( jQuery, "ajax" );
+    var getJSONDone = jQuery.getJSON( "/movies" );
+    ok( jQuery.ajax.calledOnce );
+    equal( jQuery.ajax.getCall(0).args[0].url, "/movies" );
+    equal( jQuery.ajax.getCall(0).args[0].dataType, "json" );
+});
+
+test("Fires a custom event when the state changes.", function() {
     var changeModelCallback = this.spy();
     var movie = new splat.Movie();
     movie.bind( "change", changeModelCallback );
@@ -28,8 +34,7 @@ test("Show Validation Error on bad input field in movieForm.", function() {
         "A change event-callback was correctly triggered" );
 });
 
-// TODO
-test("Test save movie model with missing fields will be rejected by server", function(assert) {
+test("Test movie model/collection add/save, and callback functions.", function(assert) {
     assert.expect(4);   // 4 assertions to be run
     var done1 = assert.async();
     var done2 = assert.async();
@@ -38,7 +43,7 @@ test("Test save movie model with missing fields will be rejected by server", fun
         "director":"Sean Penn","duration":109,"freshTotal":18,"freshVotes":27,
         "poster":"img/uploads/5627f969b8236b2b7c0a37b6.jpeg?1448200894795",
         "rating":"R","released":"1999","synopsis":"great thriller",
-        "title":"Zorba Games",
+        "title":"Zorba Games","trailer":"http://archive.org",
         "userid":"54635fe6a1342684065f6959", "genre":["action"],
         "starring":["Bruce Willis,Amy Winemouse"]});  // model
     var movies = new splat.Movies();  // collection
@@ -72,8 +77,7 @@ test("Test save movie model with missing fields will be rejected by server", fun
     });
 });
 
-//TODO
-test("Test movie-delete will remove the associated reviews as well.", function(assert) {
+test("Test movie-delete triggers an error event if unauthenticated.", function(assert) {
     var done1 = assert.async();
     var done2 = assert.async();
     var movie = new splat.Movie();  // model
@@ -102,8 +106,7 @@ test("Test movie-delete will remove the associated reviews as well.", function(a
     });
 });
 
-//TODO
-test("Test movie-delete will fail if movie does not exist.", function(assert) {
+test("Test movie-save succeeds if session is authenticated.", function(assert) {
     assert.expect( 3 );
     var done1 = assert.async();
     var done2 = assert.async();

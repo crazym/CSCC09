@@ -2,6 +2,18 @@
 
 var splat =  splat || {};
 
+
+// insert the server-generated CSRF token embedded in startup page index.html
+// as an HTTP request header with name X-CSRF-Token.
+Backbone.ajax = function() {
+    // Invoke $.ajaxSetup in the context of Backbone.$
+    Backbone.$.ajaxSetup.call(Backbone.$, {beforeSend: function(jqXHR){
+        console.log("csrfToekn is: " + splat.csrftoken);
+        jqXHR.setRequestHeader("X-CSRF-Token", splat.csrftoken);
+    }});
+    return Backbone.$.ajax.apply(Backbone.$, arguments);
+};
+
 splat.AppRouter = Backbone.Router.extend({
 
     routes: {
@@ -142,18 +154,6 @@ Backbone.View.prototype.close = function () {
     this.remove();
     this.unbind();  // implied by remove() in BB 1.0.0 and later
 
-};
-
-
-// insert the server-generated CSRF token embedded in startup page index.html
-// as an HTTP request header with name X-CSRF-Token.
-Backbone.ajax = function() {
-    // Invoke $.ajaxSetup in the context of Backbone.$
-    Backbone.$.ajaxSetup.call(Backbone.$, {beforeSend: function(jqXHR){
-        console.log("csrfToekn is: " + splat.csrftoken);
-        jqXHR.setRequestHeader("X-CSRF-Token", splat.csrftoken);
-    }});
-    return Backbone.$.ajax.apply(Backbone.$, arguments);
 };
 
 

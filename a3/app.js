@@ -95,14 +95,15 @@ app.use(csrf());
 // Setup for rendering csurf token into index.html at app-startup
 app.engine('.html', require('ejs').__express);
 app.set('views', __dirname + '/public');
+app.get('/test/test.html',function(req, res) {
+    res.render('test/test.html',
+        {csrftoken: req.csrfToken()});
+});
+
 // When client-side requests index.html, perform template substitution on it
 app.get('/index.html', function(req, res) {
     // req.csrfToken() returns a fresh random CSRF token value
     res.render('index.html', {csrftoken: req.csrfToken()});
-});
-app.get('/test/test.html',function(req, res) {
-    res.render('test/test.html',
-        {csrftoken: req.csrfToken()});
 });
 
 // checks req.body for HTTP method overrides
@@ -152,24 +153,23 @@ app.use(express.static(__dirname +  "/public"));
 // allow browsing of docs directory
 app.use(directory(__dirname +  "/public/docs"));
 
-// display errors in browser during development
-app.use(errorHandler({ dumpExceptions:true, showStack:true }));
-
-// Default-route middleware in case none of above match
-app.use(function (req, res) {
-    res.status(404).send('<h3>File Not Found</h3>');
-});
-
-
+// need to put before errorHandler ?
 app.use(function(err, req, res, next) {
-    console.log("err code: "+ err.code);
-    console.log("err code: "+ req.head.X-CSRF-Token);
+    //console.log("err code: "+ err.code);
     if (err.code ==="EBADCSRFTOKEN") {
         // send error response to client
         res.status(403).send("Invalid CSRF token, please refresh the page.");
     } else {
         return next(err);
     }
+});
+
+// display errors in browser during development
+app.use(errorHandler({ dumpExceptions:true, showStack:true }));
+
+// Default-route middleware in case none of above match
+app.use(function (req, res) {
+    res.status(404).send('<h3>File Not Found</h3>');
 });
 
 // Start HTTP server

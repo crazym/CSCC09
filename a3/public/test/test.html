@@ -21,11 +21,29 @@
     <script src="../js/lib/qunit-reporter-junit.js"></script>
     <script src="../js/lib/sinon-1.15.0.js"></script>
     <script src="../js/lib/sinon-qunit-1.0.0.js"></script>
+
+    <script>
+        var splat = splat || {};
+        Backbone.ajax = function() {
+            // Invoke $.ajaxSetup in the context of Backbone.$
+            Backbone.$.ajaxSetup.call(Backbone.$, {beforeSend:
+                    function(jqXHR){
+                        // Add CSRF token value to Ajax request headers.
+                        jqXHR.setRequestHeader("X-CSRF-Token", splat.csrftoken);
+                    }});
+            return Backbone.$.ajax.apply(Backbone.$, arguments);
+        };
+    </script>
+    <!-- set CSRF token -->
+    <script type="text/javascript">
+        splat.csrftoken = '<%= csrftoken %>';
+    </script>
     <!-- Components to be tested -->
     <script src="../js/models/user.js"></script>
     <script src="../js/collections/reviews.js"></script>
     <script src="../js/models/movie.js"></script>
     <script src="../js/collections/movies.js"></script>
+
     <!-- App tests -->
     <script src="apptests.js"></script>
   </body>

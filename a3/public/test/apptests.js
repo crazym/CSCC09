@@ -1,14 +1,3 @@
-var splat = splat || {};
-Backbone.ajax = function() {
-    // Invoke $.ajaxSetup in the context of Backbone.$
-    Backbone.$.ajaxSetup.call(Backbone.$, {beforeSend:
-        function(jqXHR){
-            // Add CSRF token value to Ajax request headers.
-            jqXHR.setRequestHeader("X-CSRF-Token", splat.token);
-        }});
-    return Backbone.$.ajax.apply(Backbone.$, arguments);
-};
-
 QUnit.jUnitReport = function(report) {
     console.log(report.xml);   // send XML output report to console
 }

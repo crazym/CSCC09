@@ -9,5 +9,5 @@ module.exports = {
     basicAuthUser: "minty",
     basicAuthPass: "I<3C09",
     sessionSecret: "topsecret",
-    sessionTimeout: 500
+    sessionTimeout: 60000 // measured in ms (1000 = 1s)
 };

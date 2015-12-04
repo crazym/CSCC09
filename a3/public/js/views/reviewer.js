@@ -7,8 +7,8 @@ splat.Reviewer = Backbone.View.extend({
 
     initialize: function (options) {
         this.model.bind("destroy", this.close, this);
-	this.reviews = this.collection;
-	this.model.collection = this.collection;
+        this.reviews = this.collection;
+        this.model.collection = this.collection;
     },
 
     events: {
@@ -18,7 +18,7 @@ splat.Reviewer = Backbone.View.extend({
 
     render: function () {
         this.$el.html(this.template(this.model.toJSON()));
-	return this;
+        return this;
     },
 
     change: function (event) {
@@ -34,13 +34,13 @@ splat.Reviewer = Backbone.View.extend({
 
     saveReview: function(event) {
         var self = this;
-	self.reviews.create(self.model, {
-       	    wait: true,
+        self.reviews.create(self.model, {
+            wait: true,
             success: function(model, response) {
-		// reinstantiate model and re-render to clear form
-		self.model = new splat.Review();
-		self.model.collection = self.reviews;
-		self.render();
+                // reinstantiate model and re-render to clear form
+                self.model = new splat.Review();
+                self.model.collection = self.reviews;
+                self.render();
                 splat.utils.showAlert('Success!', 'Review saved', 'alert-success');
             },
             error: function (model, err) {

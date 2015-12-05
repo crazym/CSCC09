@@ -1,0 +1,6 @@
+= A description of extra features or design aspects that you are particularly proud of
+* Successfully add HSTS headers to all responses! :)
+* Tried XSS attack on user signup with username <script> alert(1); </script> and successfully escaped it!
+* Setting session timeout to a very short time can trigger the Invalid CSRF token error.
+
+Thank you!

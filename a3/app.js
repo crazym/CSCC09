@@ -53,6 +53,12 @@ function hasPermission(req, res, next) {
     }
 };
 
+//Express middleware function to add an HSTS header to all responses from server
+function setHSTS(req, res, next) {
+    res.setHeader("Strict-Transport-Security", "max-age=604800");
+    next();
+}
+
 // Create Express app-server
 var app = express();
 
@@ -82,7 +88,7 @@ app.use(session({
     rolling: true,  // reset session timer on every client access
     cookie: {
         maxAge:config.sessionTimeout,  // A3 ADD CODE
-         //maxAge: null,  // no-expire session-cookies for testing
+        //maxAge: null,  // no-expire session-cookies for testing
         secure: true,// only send this cookie in requests going to HTTPS endpoints
         httpOnly: true // not allow client side script access to the cookie
     },
@@ -108,6 +114,8 @@ app.get('/index.html', function(req, res) {
 
 // checks req.body for HTTP method overrides
 app.use(methodOverride());
+// call setHSTS middleware for all routes
+app.use(setHSTS);
 
 // App routes (API) - implementation resides in routes/splat.js
 
@@ -172,11 +180,9 @@ app.use(function (req, res) {
     res.status(404).send('<h3>File Not Found</h3>');
 });
 
-// Start HTTP server
-https.createServer(options, app, function(){
-    res.writeHead(200, {    'Content-Type': 'text/plain',
-        "Strict-Transport-Security": "max-age=604800"});
-}).listen(app.get('port'), function (){
+// Start HTTPS server
+https.createServer(options, app).listen(app.get('port'), function (){
     console.log("Express server listening on port %d in %s mode",
         app.get('port'), config.env );
 });
+

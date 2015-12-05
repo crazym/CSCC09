@@ -18,15 +18,14 @@ test('Models can be initialized correctly', function() {
     equal(review.get("movieid"), '557761f092e40db92c3ccdae', "Movie id set correctly");
 
 });
-// TODO
-test("Show Validation Error on bad input field in movieForm.", function() {
-    var changeModelCallback = this.spy();
-    var movie = new splat.Movie();
-    movie.bind( "change", changeModelCallback );
-    movie.set( { "title": "Interstellar" } );
-    ok( changeModelCallback.calledOnce,
-        "A change event-callback was correctly triggered" );
+
+test("Test XSS attack will be protected by escape", function(){
+
+    var xssAttack = "<script>alert(1)</script>";
+    var inputValue = _.escape(xssAttack);
+    equal(inputValue, "&lt;script&gt;alert(1)&lt;/script&gt;", "HTML tags will be replaced correctly");
 });
+
 
 test("Test save movie model with same title-director pair will be rejected by server", function(assert) {
     assert.expect( 4 );
@@ -93,7 +92,6 @@ test("Test save movie model with same title-director pair will be rejected by se
     });
 });
 
-//TODO
 test("Test movie-delete will remove the associated reviews as well.", function(assert) {
     assert.expect(5 );
     var done1 = assert.async();
